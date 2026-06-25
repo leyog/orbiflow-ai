@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OrbiFlow.ai | WMS/WES/WCS + AI Agent + Robotics Turnkey Platform</title>
+  <meta name="description" content="OrbiFlow.ai：WMS/WES/WCS、AI Agent、机器人、IoT 设备层、PDA Scan-Priority 一体化仓储自动化平台。" />
+  <link rel="icon" type="image/png" href="assets/orbiflow-mark-tight.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            titanium: '#0f172a',
+            deep: '#08111f',
+            panel: '#111827',
+            panel2: '#172033',
+            line: '#334155',
+            frost: '#cbd5e1',
+            muted: '#94a3b8',
+            orange: '#f97316',
+            amber: '#ffb86b',
+            cyan: '#38bdf8',
+            green: '#22c55e'
+          },
+          fontFamily: {
+            sans: ['Noto Sans SC', 'sans-serif'],
+            display: ['Space Grotesk', 'Noto Sans SC', 'sans-serif']
+          },
+          boxShadow: {
+            glow: '0 0 0 1px rgba(249,115,22,.25), 0 0 54px rgba(249,115,22,.16)',
+            cold: '0 0 0 1px rgba(56,189,248,.16), 0 30px 80px rgba(2,6,23,.55)',
+            insetline: 'inset 0 1px 0 rgba(255,255,255,.05)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; min-width: 0; }
+    html, body { overflow-x: hidden; }
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background:
+        radial-gradient(circle at 12% 7%, rgba(56,189,248,.16), transparent 28%),
+        radial-gradient(circle at 85% 12%, rgba(249,115,22,.15), transparent 30%),
+        linear-gradient(180deg, #08111f 0%, #0f172a 42%, #08111f 100%);
+      color: #e5edf7;
+    }
+    .mono { font-family: 'Space Grotesk', 'Noto Sans SC', sans-serif; }
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 3px 0;
+    }
+    .brand-symbol {
+      height: 54px;
+      width: auto;
+      filter: saturate(1.18) brightness(1.08) drop-shadow(0 10px 20px rgba(2, 6, 23, .45));
+    }
+    .brand-word {
+      font-family: 'Space Grotesk', 'Noto Sans SC', sans-serif;
+      font-size: 27px;
+      line-height: .9;
+      font-weight: 700;
+      letter-spacing: -1.2px;
+      color: #f8fafc;
+      text-shadow: 0 10px 24px rgba(2, 6, 23, .42);
+    }
+    .brand-word .ai-dot { color: #c9944b; }
+    .brand-word .ai-tail { color: #dcecf5; }
+    .brand-subline {
+      display: none;
+    }
+    .footer-brand-symbol { height: 46px; width: auto; filter: drop-shadow(0 10px 20px rgba(2, 6, 23, .4)); }
+    .lang-select-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .lang-select-wrap::before {
+      content: '\f0ac';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      left: 12px;
+      color: #94a3b8;
+      font-size: 12px;
+      pointer-events: none;
+    }
+    .lang-select {
+      appearance: none;
+      min-width: 122px;
+      border: 1px solid rgba(71, 85, 105, .85);
+      border-radius: 999px;
+      background: rgba(15, 23, 42, .78);
+      color: #e2e8f0;
+      padding: 9px 32px 9px 32px;
+      font-size: 12px;
+      font-weight: 800;
+      outline: none;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+    .lang-select:hover, .lang-select:focus {
+      border-color: rgba(249, 115, 22, .65);
+      box-shadow: 0 0 0 1px rgba(249, 115, 22, .24), 0 0 24px rgba(249, 115, 22, .12);
+    }
+    .lang-select-wrap::after {
+      content: '\f107';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 12px;
+      color: #f97316;
+      font-size: 11px;
+      pointer-events: none;
+    }
+
+
+    @media (max-width: 640px) {
+      .brand-symbol { height: 42px; }
+      .brand-word { display: none; }
+      .brand-subline { display: none; }
+      .lang-select { min-width: 96px; padding: 8px 26px 8px 28px; font-size: 11px; }
+      .footer-brand-symbol { height: 38px; }
+      main h1.max-w-5xl { width: calc(100vw - 40px) !important; max-width: calc(100vw - 40px) !important; font-size: 2.75rem; line-height: 1.08; overflow-wrap: anywhere; }
+      main p, main h1, main h2, main h3, main .inline-flex { overflow-wrap: anywhere; }
+      main .inline-flex { width: fit-content; max-width: calc(100vw - 40px) !important; white-space: normal; }
+      main section p { max-width: calc(100vw - 40px) !important; }
+      main a[href^="mailto:"] { max-width: 100%; white-space: normal; text-align: center; }
+    }
+    .grid-floor {
+      background-image:
+        linear-gradient(rgba(148,163,184,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148,163,184,.07) 1px, transparent 1px),
+        linear-gradient(135deg, rgba(249,115,22,.08), transparent 35%);
+      background-size: 42px 42px, 42px 42px, 100% 100%;
+    }
+    .orbital-mark { position: relative; width: 44px; height: 30px; }
+    .orbital-mark::before, .orbital-mark::after {
+      content: ''; position: absolute; inset: 4px 2px; border: 2px solid #f97316; border-radius: 999px;
+      transform: rotate(34deg); filter: drop-shadow(0 0 10px rgba(249,115,22,.45));
+    }
+    .orbital-mark::after { transform: rotate(-34deg); border-color: #38bdf8; opacity: .85; }
+    .orbital-dot { position: absolute; right: 2px; top: 12px; width: 6px; height: 6px; border-radius: 50%; background: #f97316; box-shadow: 0 0 16px rgba(249,115,22,.9); }
+    .card {
+      border: 1px solid rgba(71,85,105,.82);
+      background: linear-gradient(180deg, rgba(23,32,51,.94), rgba(15,23,42,.86));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+    }
+    .card:hover { border-color: rgba(249,115,22,.72); transform: translateY(-2px); transition: .24s ease; }
+    .glass { border: 1px solid rgba(148,163,184,.24); background: rgba(15,23,42,.72); backdrop-filter: blur(18px); }
+    .tag { border: 1px solid rgba(249,115,22,.32); color: #fed7aa; background: rgba(249,115,22,.08); }
+    .cold-tag { border: 1px solid rgba(56,189,248,.28); color: #bae6fd; background: rgba(56,189,248,.07); }
+    .rail-title::before { content: ''; display: inline-block; width: 9px; height: 34px; margin-right: 14px; vertical-align: -8px; background: linear-gradient(180deg, #f97316, #38bdf8); clip-path: polygon(0 0,100% 9%,100% 100%,0 91%); }
+    .hairline { height: 1px; background: linear-gradient(90deg, transparent, rgba(249,115,22,.7), transparent); }
+    .scanline::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent, rgba(56,189,248,.08), transparent); transform: translateY(-100%); animation: scan 6s linear infinite; }
+    @keyframes scan { to { transform: translateY(100%); } }
+    .reveal { animation: rise .7s ease both; }
+    .delay-1 { animation-delay: .08s; } .delay-2 { animation-delay: .16s; } .delay-3 { animation-delay: .24s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    .device-svg { width: 100%; height: 210px; display: block; }
+    .device-svg text { font-family: 'Space Grotesk', 'Noto Sans SC', sans-serif; }
+    .metric-card { position: relative; overflow: hidden; }
+    .metric-card::after { content: ''; position: absolute; right: -32px; top: -42px; width: 110px; height: 110px; border-radius: 50%; background: rgba(249,115,22,.10); filter: blur(2px); }
+    .ui-shot { aspect-ratio: 16 / 9; object-fit: cover; object-position: top left; }
+    .connector { background: linear-gradient(90deg, rgba(249,115,22,.9), rgba(56,189,248,.9)); height: 2px; }
+  </style>
+</head>
+<body class="antialiased selection:bg-orange selection:text-white">
+  <div class="fixed inset-0 -z-10 grid-floor opacity-80"></div>
+
+  <header class="sticky top-0 z-50 border-b border-slate-700/70 bg-titanium/88 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+      <a href="#top" class="flex items-center" aria-label="OrbiFlow.ai home">
+        <span class="brand-lockup">
+          <img src="assets/orbiflow-mark-tight.png" alt="" class="brand-symbol" aria-hidden="true" />
+          <span class="brand-word">OrbiFlow<span class="ai-dot">.</span><span class="ai-tail">ai</span></span>
+        </span>
+      </a>
+      <nav class="hidden items-center gap-6 text-sm text-slate-300 lg:flex">
+        <a href="#meaning" class="hover:text-orange">品牌释义</a>
+        <a href="#metrics" class="hover:text-orange">使用数据</a>
+        <a href="#features" class="hover:text-orange">功能点</a>
+        <a href="#screens" class="hover:text-orange">系统界面</a>
+        <a href="#hardware" class="hover:text-orange">硬件产品</a>
+        <a href="#examples" class="hover:text-orange">应用场景</a>
+        <a href="#contact" class="hover:text-orange">方案评估</a>
+      </nav>
+      <div class="flex items-center gap-2 sm:gap-3">
+        <label class="lang-select-wrap" aria-label="Language selector">
+          <select class="lang-select" id="languageSelect">
+            <option value="zh">中文</option>
+            <option value="en">English</option>
+            <option value="ja">日本語</option>
+          </select>
+        </label>
+        <a href="mailto:hello@orbiflow.ai?subject=OrbiFlow%20%E4%BB%93%E5%BA%93%E8%87%AA%E5%8A%A8%E5%8C%96%E8%AF%84%E4%BC%B0&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%83%B3%E8%AF%84%E4%BC%B0%20OrbiFlow%20%E6%96%B9%E6%A1%88%E3%80%82%0A%E4%BB%93%E5%BA%93%E7%B1%BB%E5%9E%8B%EF%BC%9A%0A%E6%97%A5%E5%9D%87%E8%AE%A2%E5%8D%95/%E5%B3%B0%E5%80%BC%E8%AE%A2%E5%8D%95%EF%BC%9A%0ASKU%20%E6%95%B0%E9%87%8F%EF%BC%9A%0A%E7%8E%B0%E6%9C%89%E7%B3%BB%E7%BB%9F%EF%BC%88ERP/OMS/TMS/WMS%EF%BC%89%EF%BC%9A%0A%E7%8E%B0%E6%9C%89%E8%AE%BE%E5%A4%87%EF%BC%88%E8%BE%93%E9%80%81%E7%BA%BF/AMR/PTL/RFID/DWS/PLC%EF%BC%89%EF%BC%9A%0A%E4%B8%BB%E8%A6%81%E9%97%AE%E9%A2%98%EF%BC%9A" class="hidden rounded-full border border-orange/60 bg-orange/10 px-4 py-2 text-sm font-semibold text-orange shadow-glow hover:bg-orange hover:text-white md:inline-flex">预约技术评估</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="relative overflow-hidden border-b border-slate-800">
+      <div class="absolute left-1/2 top-0 h-[560px] w-[560px] -translate-x-1/2 rounded-full bg-orange/10 blur-3xl"></div>
+      <div class="mx-auto grid max-w-7xl gap-10 px-5 py-14 lg:grid-cols-[1.02fr_.98fr] lg:px-8 lg:py-20">
+        <div class="reveal self-center">
+          <div class="mb-6 inline-flex flex-wrap items-center gap-3 rounded-full border border-slate-600 bg-slate-900/70 px-4 py-2 text-sm text-slate-300">
+            <i class="fa-solid fa-infinity text-orange"></i>
+            WMS + WCS 一体化仓储平台｜从订单到设备动作，一套系统全贯通
+          </div>
+          <h1 class="max-w-5xl font-display text-5xl font-bold leading-[1.04] tracking-[-.04em] text-white md:text-7xl">
+            不止管库存，<br><span class="text-orange">直接调度仓库的物理世界。</span>
+          </h1>
+          <p class="mt-7 max-w-3xl text-lg leading-8 text-slate-300 md:text-xl">
+            OrbiFlow.ai 面向正在自动化升级的中大型仓库（3PL / 电商 / 制造业），交付自研 WMS/WES/WCS、AI Agent 与机器人硬件的软硬一体方案。目标很直接：降低自动化项目定制开发成本、缩短新仓上线周期、避免被单一设备厂商绑定。
+          </p>
+          <div class="mt-9 flex flex-wrap gap-3">
+            <a href="mailto:hello@orbiflow.ai?subject=OrbiFlow%20%E4%BB%93%E5%BA%93%E8%87%AA%E5%8A%A8%E5%8C%96%E8%AF%84%E4%BC%B0&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%83%B3%E8%AF%84%E4%BC%B0%20OrbiFlow%20%E6%96%B9%E6%A1%88%E3%80%82%0A%E4%BB%93%E5%BA%93%E7%B1%BB%E5%9E%8B%EF%BC%9A%0A%E6%97%A5%E5%9D%87%E8%AE%A2%E5%8D%95/%E5%B3%B0%E5%80%BC%E8%AE%A2%E5%8D%95%EF%BC%9A%0ASKU%20%E6%95%B0%E9%87%8F%EF%BC%9A%0A%E7%8E%B0%E6%9C%89%E7%B3%BB%E7%BB%9F%EF%BC%88ERP/OMS/TMS/WMS%EF%BC%89%EF%BC%9A%0A%E7%8E%B0%E6%9C%89%E8%AE%BE%E5%A4%87%EF%BC%88%E8%BE%93%E9%80%81%E7%BA%BF/AMR/PTL/RFID/DWS/PLC%EF%BC%89%EF%BC%9A%0A%E4%B8%BB%E8%A6%81%E9%97%AE%E9%A2%98%EF%BC%9A" class="inline-flex items-center rounded-full bg-orange px-6 py-3 text-sm font-bold text-white shadow-glow hover:bg-orange/90">预约 30 分钟技术评估 <i class="fa-solid fa-arrow-right ml-3"></i></a>
+            <a href="#fit" class="inline-flex items-center rounded-full border border-slate-600 bg-slate-900/70 px-6 py-3 text-sm font-bold text-slate-200 hover:border-orange hover:text-orange">先看是否适合</a>
+          </div>
+          <div class="mt-6 grid gap-3 text-sm text-slate-300 sm:grid-cols-3">
+            <div class="rounded-2xl border border-slate-700 bg-slate-900/55 p-4"><span class="text-orange">适合</span> 多仓、多货主、自动化设备混合现场</div>
+            <div class="rounded-2xl border border-slate-700 bg-slate-900/55 p-4"><span class="text-orange">解决</span> WMS、WCS、机器人厂商割裂</div>
+            <div class="rounded-2xl border border-slate-700 bg-slate-900/55 p-4"><span class="text-orange">交付</span> 蓝图、驱动、联调、爬坡一体化</div>
+          </div>
+        </div>
+
+        <div class="reveal delay-2">
+          <div class="scanline relative overflow-hidden rounded-[2rem] border border-slate-600 bg-slate-950/82 p-4 shadow-cold">
+            <div class="mb-4 flex items-center justify-between border-b border-slate-700 pb-4">
+              <div>
+                <div class="text-xs uppercase tracking-[.32em] text-slate-500">OrbiFlow Runtime</div>
+                <div class="mt-1 font-display text-2xl font-bold text-white">实时运营控制台</div>
+              </div>
+              <div class="rounded-full border border-green/40 bg-green/10 px-3 py-1 text-xs font-bold text-green">ONLINE</div>
+            </div>
+            <img class="ui-shot w-full rounded-2xl border border-slate-700 bg-white" src="assets/ppt-images/image2.png" alt="OrbiFlow Dashboard dashboard screenshot" />
+            <div class="mt-4 grid gap-3 sm:grid-cols-3">
+              <div class="rounded-2xl border border-slate-700 bg-slate-900/70 p-4">
+                <div class="mono text-2xl font-bold text-white">30s</div>
+                <p class="mt-1 text-xs text-slate-400">Dashboard 自动刷新</p>
+              </div>
+              <div class="rounded-2xl border border-slate-700 bg-slate-900/70 p-4">
+                <div class="mono text-2xl font-bold text-white">24h</div>
+                <p class="mt-1 text-xs text-slate-400">任务趋势与节拍监控</p>
+              </div>
+              <div class="rounded-2xl border border-slate-700 bg-slate-900/70 p-4">
+                <div class="mono text-2xl font-bold text-white">7</div>
+                <p class="mt-1 text-xs text-slate-400">作业状态全追踪</p>
+              </div>
+            </div>
+            <div class="mt-4 rounded-2xl border border-slate-700 bg-black/30 p-4 font-display text-xs leading-6 text-slate-400">
+              <span class="text-orange">event:</span> conveyor.segment.B7 fault → WES rewrite path → tote rerouted to AirRob aisle C → SLA unaffected
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="meaning" class="border-b border-slate-800 bg-slate-950/35 py-14">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mb-9 grid gap-6 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
+          <div>
+            <p class="mb-3 text-sm font-bold uppercase tracking-[.36em] text-orange">What OrbiFlow Means</p>
+            <h2 class="rail-title font-display text-4xl font-bold tracking-tight text-white md:text-5xl">OrbiFlow：把 Operation、Robotics、BI 串成现场物流的连续流。</h2>
+          </div>
+          <p class="text-lg leading-8 text-slate-300">OrbiFlow 的名字不是抽象概念，而是产品边界：现场业务、机器人控制、数据智能不再分成三个孤岛，而是形成“モノ（物）、人、作业、情报”的统一流动。</p>
+        </div>
+        <div class="grid gap-5 lg:grid-cols-4">
+          <article class="card rounded-[1.7rem] p-6">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-orange/45 bg-orange/10 font-display text-2xl font-bold text-orange">O</div>
+            <h3 class="font-display text-2xl font-bold text-white">Operation</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-300">解决 WMS 层的现场业务、移动端 PDA 协同与人工操作，让收货、理货、盘点、拣选、复核都有可追踪的业务事实。</p>
+          </article>
+          <article class="card rounded-[1.7rem] p-6">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan/45 bg-cyan/10 font-display text-2xl font-bold text-cyan">R</div>
+            <h3 class="font-display text-2xl font-bold text-white">Robotics</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-300">解决 WCS/WES 层的机器人调度与自动化设备控制，覆盖 AGV/AMR、穿梭车、输送线、PTL、RFID、DWS 与 PLC。</p>
+          </article>
+          <article class="card rounded-[1.7rem] p-6">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-orange/45 bg-orange/10 font-display text-xl font-bold text-orange">BI</div>
+            <h3 class="font-display text-2xl font-bold text-white">Business Intelligence</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-300">解决全局数据看板、AI 预测、效率瓶颈分析，把订单、库存、设备、站点与异常转成可决策的运营情报。</p>
+          </article>
+          <article class="card rounded-[1.7rem] p-6">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan/45 bg-cyan/10 text-xl text-cyan"><i class="fa-solid fa-infinity"></i></div>
+            <h3 class="font-display text-2xl font-bold text-white">Flow</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-300">将 O、R、BI 打破孤岛，串联成物流现场最顺畅的“モノ（物）、人、作业、情报”之流。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="fit" class="mx-auto max-w-7xl px-5 py-12 lg:px-8">
+      <div class="grid gap-6 lg:grid-cols-[.85fr_1.15fr] lg:items-stretch">
+        <div class="card rounded-[2rem] p-7">
+          <p class="mb-3 text-sm font-bold uppercase tracking-[.34em] text-orange">Buying Triggers</p>
+          <h2 class="font-display text-3xl font-bold tracking-tight text-white md:text-4xl">如果你正在评估仓库解决方案，先看这四个问题。</h2>
+          <p class="mt-5 leading-7 text-slate-300">OrbiFlow 更适合业务复杂、设备复杂、现场异常多的仓库；如果只是单仓轻量进销存，传统 WMS 会更简单。</p>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2">
+          <div class="card rounded-2xl p-5"><i class="fa-solid fa-link-slash mb-4 text-2xl text-orange"></i><h3 class="font-bold text-white">系统割裂</h3><p class="mt-2 text-sm leading-6 text-slate-400">WMS、WCS、RCS、PTL、DWS 各有状态，异常靠人工微信群同步。</p></div>
+          <div class="card rounded-2xl p-5"><i class="fa-solid fa-triangle-exclamation mb-4 text-2xl text-orange"></i><h3 class="font-bold text-white">现场异常吞噬产能</h3><p class="mt-2 text-sm leading-6 text-slate-400">盲收、错分、堵线、复秤失败、格口满载会让标准流程频繁中断。</p></div>
+          <div class="card rounded-2xl p-5"><i class="fa-solid fa-code-branch mb-4 text-2xl text-cyan"></i><h3 class="font-bold text-white">新业务上线慢</h3><p class="mt-2 text-sm leading-6 text-slate-400">每个客户、渠道、承运商或设备变更都需要重新开发和发版。</p></div>
+          <div class="card rounded-2xl p-5"><i class="fa-solid fa-magnifying-glass-chart mb-4 text-2xl text-cyan"></i><h3 class="font-bold text-white">缺少可审计闭环</h3><p class="mt-2 text-sm leading-6 text-slate-400">订单、库存、容器、设备动作、人工确认和异常补偿不能串成一条链。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="outcomes" class="border-y border-slate-800 bg-slate-950/45 py-16">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mb-10 max-w-4xl">
+          <p class="mb-3 text-sm font-bold uppercase tracking-[.36em] text-orange">Business Outcomes</p>
+          <h2 class="rail-title font-display text-4xl font-bold tracking-tight text-white md:text-5xl">客户真正买的是上线确定性、自动化可控性和长期扩展成本。</h2>
+          <p class="mt-5 text-lg leading-8 text-slate-300">OrbiFlow 的价值不只在模块齐全，而是在业务规则、设备动作和异常补偿之间建立同一套事实链路。</p>
+        </div>
+        <div class="grid gap-5 lg:grid-cols-4">
+          <div class="card rounded-[1.6rem] p-6"><i class="fa-solid fa-screwdriver-wrench mb-5 text-3xl text-orange"></i><h3 class="font-display text-xl font-bold text-white">降低定制开发成本</h3><p class="mt-3 text-sm leading-6 text-slate-400">通过 Job-Workflow、Filter 模板、Assignment Mode 和设备对象模型，把新场景从代码开发转为配置发布。</p></div>
+          <div class="card rounded-[1.6rem] p-6"><i class="fa-solid fa-stopwatch mb-5 text-3xl text-cyan"></i><h3 class="font-display text-xl font-bold text-white">缩短新仓上线周期</h3><p class="mt-3 text-sm leading-6 text-slate-400">主数据、库位、容器、设备、工作站、任务状态机复用，减少每个仓从零建模的时间。</p></div>
+          <div class="card rounded-[1.6rem] p-6"><i class="fa-solid fa-robot mb-5 text-3xl text-orange"></i><h3 class="font-display text-xl font-bold text-white">降低设备绑定风险</h3><p class="mt-3 text-sm leading-6 text-slate-400">协议适配层统一封装 PLC、AMR、PTL、RFID、DWS 等设备，换设备优先改配置，不改业务逻辑。</p></div>
+          <div class="card rounded-[1.6rem] p-6"><i class="fa-solid fa-shield-halved mb-5 text-3xl text-cyan"></i><h3 class="font-display text-xl font-bold text-white">提升异常恢复能力</h3><p class="mt-3 text-sm leading-6 text-slate-400">盲收、错分、堵线、格口满、复秤失败与设备宕机进入补偿任务和 Rerouting，不靠人工记忆兜底。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="metrics" class="mx-auto max-w-7xl px-5 py-12 lg:px-8">
+      <div class="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-2 text-sm font-bold uppercase tracking-[.34em] text-orange">Operational Proof Points</p>
+          <h2 class="rail-title font-display text-3xl font-bold text-white md:text-5xl">用数字讲清楚：OrbiFlow 到底能覆盖什么、缩短什么、降低什么风险。</h2>
+        </div>
+        <p class="max-w-2xl text-sm leading-6 text-slate-400">这些不是装饰数字，而是售前评估、方案设计和上线验收会逐项核对的能力口径。现场数据进入评估后，可进一步测算节拍、瓶颈、ROI 与上线分期。</p>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div class="card metric-card rounded-2xl p-5">
+          <div class="mono text-4xl font-bold text-white">2周</div>
+          <div class="mt-2 font-bold text-slate-200">评估 Sprint</div>
+          <p class="mt-2 text-sm leading-6 text-slate-400">完成业务流、库存流、设备流、异常流梳理，并输出上线范围与集成风险清单。</p>
+        </div>
+        <div class="card metric-card rounded-2xl p-5">
+          <div class="mono text-4xl font-bold text-white">0</div>
+          <div class="mt-2 font-bold text-slate-200">通信中间件依赖</div>
+          <p class="mt-2 text-sm leading-6 text-slate-400">WCS 原生直连 PLC、输送线、PTL、RFID、DWS 与机器人控制系统。</p>
+        </div>
+        <div class="card metric-card rounded-2xl p-5">
+          <div class="mono text-4xl font-bold text-white">19</div>
+          <div class="mt-2 font-bold text-slate-200">工作站操作模式</div>
+          <p class="mt-2 text-sm leading-6 text-slate-400">7 种出库、3 种入库、9 种库内操作，覆盖 Pick & Pack、Pick To Wall、合托、拆托等。</p>
+        </div>
+        <div class="card metric-card rounded-2xl p-5">
+          <div class="mono text-4xl font-bold text-white">4</div>
+          <div class="mt-2 font-bold text-slate-200">标准集成方式</div>
+          <p class="mt-2 text-sm leading-6 text-slate-400">REST API、Webhook、RabbitMQ/Kafka 消息队列、SFTP CSV 文件交换。</p>
+        </div>
+        <div class="card metric-card rounded-2xl p-5">
+          <div class="mono text-4xl font-bold text-white">30s</div>
+          <div class="mt-2 font-bold text-slate-200">运营看板刷新</div>
+          <p class="mt-2 text-sm leading-6 text-slate-400">订单、任务、异常、工作流健康度与每小时完成量进入实时运营视图。</p>
+        </div>
+        <div class="card metric-card rounded-2xl p-5">
+          <div class="mono text-4xl font-bold text-white">ms</div>
+          <div class="mt-2 font-bold text-slate-200">设备动作反馈</div>
+          <p class="mt-2 text-sm leading-6 text-slate-400">PTL 亮灯、输送线放行、扫码确认、分拣投递按毫秒级事件回传建模。</p>
+        </div>
+        <div class="card metric-card rounded-2xl p-5">
+          <div class="mono text-4xl font-bold text-white">6</div>
+          <div class="mt-2 font-bold text-slate-200">LP 容器体系</div>
+          <p class="mt-2 text-sm leading-6 text-slate-400">ILP / HLP / CLP / SLP 等容器类型，支持嵌套、整体移动和库存追溯。</p>
+        </div>
+        <div class="card metric-card rounded-2xl p-5">
+          <div class="mono text-4xl font-bold text-white">3层</div>
+          <div class="mt-2 font-bold text-slate-200">权限与数据隔离</div>
+          <p class="mt-2 text-sm leading-6 text-slate-400">租户、仓库、功能三层权限模型，多仓切换、数据隔离、主数据共享。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="border-y border-slate-800 bg-slate-950/45 py-16">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mb-10 max-w-4xl">
+          <p class="mb-3 text-sm font-bold uppercase tracking-[.36em] text-orange">Core Product Features</p>
+          <h2 class="rail-title font-display text-4xl font-bold tracking-tight text-white md:text-5xl">主要功能点：按模块清楚列出来，让懂行的人快速判断覆盖面。</h2>
+          <p class="mt-5 text-lg leading-8 text-slate-300">OrbiFlow 以 WMS + WCS + Workflow + 设备直驱为主线组织功能。每个模块都是可配置、可追踪、可审计的业务对象，而不是分散的定制页面。</p>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <article class="card rounded-2xl p-5"><i class="fa-solid fa-chart-line mb-4 text-2xl text-orange"></i><h3 class="font-display text-xl font-bold text-white">Dashboard 运营看板</h3><p class="mt-2 text-sm leading-6 text-slate-400">实时 KPI、订单趋势、异常预警、当日作业统计，支持 30s 自动刷新；管理层一屏判断吞吐、积压与异常优先级。</p></article>
+          <article class="card rounded-2xl p-5"><i class="fa-solid fa-address-book mb-4 text-2xl text-cyan"></i><h3 class="font-display text-xl font-bold text-white">MDM 主数据</h3><p class="mt-2 text-sm leading-6 text-slate-400">组织、客户、商品、行业属性、危化品、承运商、地址统一维护；减少多仓重复录入和口径不一致。</p></article>
+          <article class="card rounded-2xl p-5"><i class="fa-solid fa-warehouse mb-4 text-2xl text-orange"></i><h3 class="font-display text-xl font-bold text-white">Facility 仓库设施</h3><p class="mt-2 text-sm leading-6 text-slate-400">仓库、库位、工作站、设备、RCS 客户端、PTL、容器、虚拟位置组 VLG 结构化建模；扩仓不重写底层逻辑。</p></article>
+          <article class="card rounded-2xl p-5"><i class="fa-solid fa-boxes-stacked mb-4 text-2xl text-cyan"></i><h3 class="font-display text-xl font-bold text-white">Inventory 库存生命周期</h3><p class="mt-2 text-sm leading-6 text-slate-400">库存查询、锁定、调整、活动日志、动态属性映射、Min/Max 补货与 LP 追溯；降低超卖、错批和人工查账成本。</p></article>
+          <article class="card rounded-2xl p-5"><i class="fa-solid fa-clipboard-check mb-4 text-2xl text-orange"></i><h3 class="font-display text-xl font-bold text-white">Cycle Count 动盘盘点</h3><p class="mt-2 text-sm leading-6 text-slate-400">盘点计划、任务、结果、差异标记（DISCREPANCY / WARNING）；动盘不锁库，盘点不牺牲出入库节拍。</p></article>
+          <article class="card rounded-2xl p-5"><i class="fa-solid fa-arrow-right-to-bracket mb-4 text-2xl text-cyan"></i><h3 class="font-display text-xl font-bold text-white">Inbound 入库</h3><p class="mt-2 text-sm leading-6 text-slate-400">收货单、Dock 预约、卸货、LP 绑定、批次/序列号、标签打印、Blind Receiving 与策略上架；突发到货不断流。</p></article>
+          <article class="card rounded-2xl p-5"><i class="fa-solid fa-truck-ramp-box mb-4 text-2xl text-orange"></i><h3 class="font-display text-xl font-bold text-white">Outbound 出库</h3><p class="mt-2 text-sm leading-6 text-slate-400">订单接入、库存预分配、订单计划、智能派发、Pick-to-Tote、Pick-to-Belt、打包、装车与发运记录；减少人工拆单。</p></article>
+          <article class="card rounded-2xl p-5"><i class="fa-solid fa-list-check mb-4 text-2xl text-cyan"></i><h3 class="font-display text-xl font-bold text-white">Task 任务中枢</h3><p class="mt-2 text-sm leading-6 text-slate-400">收货、上架、移动、拣货、打包、合托、组装、暂存、补货、装车、退库任务统一状态机；每个动作可追踪可重试。</p></article>
+          <article class="card rounded-2xl p-5"><i class="fa-solid fa-diagram-project mb-4 text-2xl text-orange"></i><h3 class="font-display text-xl font-bold text-white">Job-Workflow 引擎</h3><p class="mt-2 text-sm leading-6 text-slate-400">零代码定义流程，拖拽节点、判断分支、并行执行、异常重试；新客户、新渠道、新设备场景配置即上线。</p></article>
+          <article class="card rounded-2xl p-5"><i class="fa-solid fa-clock mb-4 text-2xl text-cyan"></i><h3 class="font-display text-xl font-bold text-white">Scheduler 调度器</h3><p class="mt-2 text-sm leading-6 text-slate-400">触发器、假期、执行日志、Cron 自动派发；订单释放、补货、波次和报表任务不依赖人工定时点击。</p></article>
+          <article class="card rounded-2xl p-5"><i class="fa-solid fa-microchip mb-4 text-2xl text-orange"></i><h3 class="font-display text-xl font-bold text-white">WCS Management</h3><p class="mt-2 text-sm leading-6 text-slate-400">设备总览、拓扑布局、PLC 寄存器、AGV/AMR 车队、通信日志、仿真控制与回调记录；运维能定位到设备动作。</p></article>
+          <article class="card rounded-2xl p-5"><i class="fa-solid fa-mobile-screen-button mb-4 text-2xl text-cyan"></i><h3 class="font-display text-xl font-bold text-white">Device App / PDA</h3><p class="mt-2 text-sm leading-6 text-slate-400">工作站操作、PDA 扫描优先（Scan-Priority）、大字体、防误触、弱网本地缓存；一线人员少看屏、多扫描。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="screens" class="py-16">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mb-10 grid gap-6 lg:grid-cols-[.85fr_1.15fr] lg:items-end">
+          <div>
+            <p class="mb-3 text-sm font-bold uppercase tracking-[.36em] text-orange">System Screens</p>
+            <h2 class="rail-title font-display text-4xl font-bold tracking-tight text-white md:text-5xl">把“功能点”落到真实界面，不只是一张技术架构图。</h2>
+          </div>
+          <p class="text-lg leading-8 text-slate-300">运营 Dashboard、Workflow 编排、AI Assistant、订单与库存页面贯穿同一套权限、主数据与任务状态机。管理端看策略，工作站看执行，PDA 看下一步动作。</p>
+        </div>
+        <div class="grid gap-6 lg:grid-cols-3">
+          <figure class="card overflow-hidden rounded-[1.8rem]"><img class="ui-shot w-full" src="assets/ppt-images/image2.png" alt="OrbiFlow WMS dashboard" /><figcaption class="p-5"><h3 class="font-bold text-white">Dashboard：仓库运营全貌</h3><p class="mt-2 text-sm leading-6 text-slate-400">订单趋势、任务进度、异常预警、当日作业统计，给仓库经理与供应链 VP 看同一套事实。</p></figcaption></figure>
+          <figure class="card overflow-hidden rounded-[1.8rem]"><img class="ui-shot w-full" src="assets/ppt-images/image12.png" alt="OrbiFlow workflow definition designer" /><figcaption class="p-5"><h3 class="font-bold text-white">Workflow：零代码流程编排</h3><p class="mt-2 text-sm leading-6 text-slate-400">节点拖拽、设备选择、参数映射、异常分支与重试策略，支撑新场景配置即上线。</p></figcaption></figure>
+          <figure class="card overflow-hidden rounded-[1.8rem]"><img class="ui-shot w-full" src="assets/ppt-images/image13.png" alt="OrbiFlow AI assistant" /><figcaption class="p-5"><h3 class="font-bold text-white">AI Assistant：对话即操作</h3><p class="mt-2 text-sm leading-6 text-slate-400">库存查询、订单追踪、出入库管理、数据报表、异常预警；LLM 解析意图，系统校验权限。</p></figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="software" class="border-y border-slate-800 bg-slate-950/50 py-16">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mb-10 max-w-4xl">
+          <p class="mb-3 text-sm font-bold uppercase tracking-[.36em] text-orange">Software Control Matrix</p>
+          <h2 class="rail-title font-display text-4xl font-bold tracking-tight text-white md:text-5xl">WMS 记录业务事实，WES 编排作业池，WCS 下发物理动作。</h2>
+        </div>
+        <div class="grid gap-5 lg:grid-cols-3">
+          <article class="card rounded-[1.8rem] p-6">
+            <span class="cold-tag rounded-full px-3 py-1 text-xs font-bold">WMS / Receiving · Inventory · Fulfillment</span>
+            <h3 class="mt-5 font-display text-2xl font-bold text-white">OrbiFlow WMS</h3>
+            <ul class="mt-5 space-y-3 text-sm leading-6 text-slate-300">
+              <li><i class="fa-solid fa-check mr-2 text-orange"></i>ASN / PO 标准核对，缺单、多货、混批与破损进入异常队列。</li>
+              <li><i class="fa-solid fa-check mr-2 text-orange"></i><strong class="text-white">Blind Receiving</strong>：无单突发到货生成临时批次与待挂账交易。</li>
+              <li><i class="fa-solid fa-check mr-2 text-orange"></i>多层级 3D 逻辑库位、FIFO/FEFO 效期、防混放、动盘与异动盘点。</li>
+              <li><i class="fa-solid fa-check mr-2 text-orange"></i>Pick-to-Tote、Pick-to-Belt、耗材推荐、多承运商电子面单直连。</li>
+            </ul>
+          </article>
+          <article class="card rounded-[1.8rem] p-6">
+            <span class="cold-tag rounded-full px-3 py-1 text-xs font-bold">WES / Job Pool · Rerouting · Deadlock-free</span>
+            <h3 class="mt-5 font-display text-2xl font-bold text-white">OrbiFlow WES</h3>
+            <ul class="mt-5 space-y-3 text-sm leading-6 text-slate-300">
+              <li><i class="fa-solid fa-check mr-2 text-orange"></i>接管作业池：收货、上架、拣货、补货、盘点、复核任务交织。</li>
+              <li><i class="fa-solid fa-check mr-2 text-orange"></i>根据设备实时负载、格口空闲率、交通热力图做 <strong class="text-white">Tote Rerouting</strong>。</li>
+              <li><i class="fa-solid fa-check mr-2 text-orange"></i>订单智能派发：Filter 模板、Assignment Mode、Cron 定时计划与异常排除。</li>
+              <li><i class="fa-solid fa-check mr-2 text-orange"></i>动态波次重组，避免输送线堵点、机器人排队与格口饥饿。</li>
+            </ul>
+          </article>
+          <article class="card rounded-[1.8rem] p-6">
+            <span class="cold-tag rounded-full px-3 py-1 text-xs font-bold">WCS / PLC · AMR · PTL · DWS</span>
+            <h3 class="mt-5 font-display text-2xl font-bold text-white">OrbiFlow WCS</h3>
+            <ul class="mt-5 space-y-3 text-sm leading-6 text-slate-300">
+              <li><i class="fa-solid fa-check mr-2 text-orange"></i>原生集成多品牌 PLC 驱动，无需第三方通信中间件。</li>
+              <li><i class="fa-solid fa-check mr-2 text-orange"></i>直接控制堆垛机、四向穿梭车、输送线、PTL、RFID、DWS、AMR/RCS。</li>
+              <li><i class="fa-solid fa-check mr-2 text-orange"></i>设备总览、拓扑布局、PLC 寄存器监控、通信日志与仿真控制。</li>
+              <li><i class="fa-solid fa-check mr-2 text-orange"></i>毫秒级屏蔽硬件差异，将设备事件回写业务事实层。</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="hardware" class="py-16">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mb-10 grid gap-6 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+          <div>
+            <p class="mb-3 text-sm font-bold uppercase tracking-[.36em] text-orange">Hardware Products</p>
+            <h2 class="rail-title font-display text-4xl font-bold tracking-tight text-white md:text-5xl">设备层：机器人、IoT 设备与手持终端由同一个 WCS 直驱。</h2>
+          </div>
+          <p class="text-lg leading-8 text-slate-300">每个硬件产品都对应明确的现场用途、控制对象与 WCS 回传事件。OrbiFlow 将机器人、IoT 设备、传感器与手持终端抽象为统一设备对象，直接进入任务调度与异常处理链路。</p>
+        </div>
+        <div class="grid gap-6 lg:grid-cols-3">
+          <article class="card overflow-hidden rounded-[2rem]">
+            <figure class="border-b border-slate-700 bg-slate-950 p-5">
+              <svg class="device-svg" viewBox="0 0 520 260" role="img" aria-label="AirRob hanging tote robot illustration">
+                <defs><linearGradient id="rail" x1="0" x2="1"><stop stop-color="#38bdf8"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs>
+                <rect x="25" y="32" width="470" height="18" rx="9" fill="url(#rail)" opacity=".95"/><path d="M70 50 L70 190 M185 50 L185 190 M335 50 L335 190 M455 50 L455 190" stroke="#334155" stroke-width="6"/>
+                <rect x="118" y="72" width="132" height="64" rx="16" fill="#172033" stroke="#f97316" stroke-width="3"/><circle cx="148" cy="104" r="14" fill="#38bdf8"/><circle cx="220" cy="104" r="14" fill="#38bdf8"/><rect x="145" y="148" width="78" height="52" rx="8" fill="#0f172a" stroke="#94a3b8"/>
+                <path d="M295 88 h120 v88 h-120z" fill="#111827" stroke="#38bdf8" stroke-width="3"/><path d="M315 110 h80 M315 134 h58 M315 158 h86" stroke="#f97316" stroke-width="5" stroke-linecap="round"/>
+                <text x="42" y="235" fill="#94a3b8" font-size="20">AirRob / overhead tote-to-person</text>
+              </svg>
+            </figure>
+            <div class="p-6"><h3 class="font-display text-2xl font-bold text-white">AirRob 空中机器人</h3><p class="mt-3 text-sm leading-6 text-slate-300">悬挂式料箱到人系统，超高密度立体调度。WCS 管理轨道占用、吊箱动作、站点排队、异常绕行与 Rerouting。</p></div>
+          </article>
+
+          <article class="card overflow-hidden rounded-[2rem]">
+            <figure class="border-b border-slate-700 bg-slate-950 p-5">
+              <svg class="device-svg" viewBox="0 0 520 260" role="img" aria-label="3D-Sort sorter illustration">
+                <rect x="54" y="36" width="412" height="40" rx="20" fill="#111827" stroke="#38bdf8" stroke-width="3"/><rect x="86" y="92" width="348" height="118" rx="18" fill="#172033" stroke="#475569" stroke-width="2"/>
+                <g fill="#0f172a" stroke="#f97316" stroke-width="2"><rect x="105" y="108" width="58" height="38" rx="7"/><rect x="175" y="108" width="58" height="38" rx="7"/><rect x="245" y="108" width="58" height="38" rx="7"/><rect x="315" y="108" width="58" height="38" rx="7"/><rect x="105" y="158" width="58" height="38" rx="7"/><rect x="175" y="158" width="58" height="38" rx="7"/><rect x="245" y="158" width="58" height="38" rx="7"/><rect x="315" y="158" width="58" height="38" rx="7"/></g>
+                <path d="M80 56 C150 25 215 25 258 56 S370 92 443 56" fill="none" stroke="#f97316" stroke-width="5" stroke-linecap="round"/><circle cx="256" cy="56" r="12" fill="#38bdf8"/>
+                <text x="54" y="238" fill="#94a3b8" font-size="20">3D-Sort / dynamic chute allocation</text>
+              </svg>
+            </figure>
+            <div class="p-6"><h3 class="font-display text-2xl font-bold text-white">3D-Sort 立体分拣系统</h3><p class="mt-3 text-sm leading-6 text-slate-300">动态格口分配，应对大促千万级包裹错层高速分拣。WES 按承运商、线路、截单时间与格口空闲率重组波次。</p></div>
+          </article>
+
+          <article class="card overflow-hidden rounded-[2rem]">
+            <figure class="border-b border-slate-700 bg-slate-950 p-5">
+              <svg class="device-svg" viewBox="0 0 520 260" role="img" aria-label="sorting robot illustration">
+                <rect x="52" y="168" width="416" height="24" rx="12" fill="#334155"/><path d="M84 152 C150 108 245 108 322 152" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="8 8"/>
+                <g transform="translate(105 112)"><rect width="82" height="52" rx="24" fill="#f97316"/><circle cx="20" cy="56" r="13" fill="#0f172a" stroke="#cbd5e1"/><circle cx="62" cy="56" r="13" fill="#0f172a" stroke="#cbd5e1"/><rect x="22" y="17" width="38" height="14" rx="7" fill="#111827"/></g>
+                <g transform="translate(300 102)"><rect width="92" height="58" rx="27" fill="#fbbf24"/><circle cx="24" cy="62" r="14" fill="#0f172a" stroke="#cbd5e1"/><circle cx="70" cy="62" r="14" fill="#0f172a" stroke="#cbd5e1"/><rect x="28" y="18" width="38" height="15" rx="7" fill="#111827"/></g>
+                <rect x="220" y="60" width="74" height="52" rx="10" fill="#172033" stroke="#f97316" stroke-width="3"/><path d="M257 112 V152" stroke="#f97316" stroke-width="4"/>
+                <text x="52" y="232" fill="#94a3b8" font-size="20">Mini sorter robot / route + drop action</text>
+              </svg>
+            </figure>
+            <div class="p-6"><h3 class="font-display text-2xl font-bold text-white">小黄人分拣机器人</h3><p class="mt-3 text-sm leading-6 text-slate-300">柔性台面分拣方案，WCS 实时下发小车行进轨迹、避让策略、投递动作与缺口重投策略。</p></div>
+          </article>
+
+          <article class="card overflow-hidden rounded-[2rem]">
+            <figure class="border-b border-slate-700 bg-slate-950 p-5">
+              <svg class="device-svg" viewBox="0 0 520 260" role="img" aria-label="edge gateway illustration">
+                <rect x="110" y="58" width="300" height="128" rx="22" fill="#172033" stroke="#38bdf8" stroke-width="3"/><rect x="138" y="82" width="102" height="50" rx="8" fill="#0f172a" stroke="#475569"/><circle cx="282" cy="106" r="10" fill="#22c55e"/><circle cx="318" cy="106" r="10" fill="#f97316"/><circle cx="354" cy="106" r="10" fill="#38bdf8"/><path d="M128 186 v24 M170 186 v24 M212 186 v24 M254 186 v24 M296 186 v24 M338 186 v24 M380 186 v24" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+                <path d="M240 132 h140" stroke="#f97316" stroke-width="5" stroke-linecap="round"/><text x="103" y="236" fill="#94a3b8" font-size="20">Modbus TCP/RTU · Profinet · sensor events</text>
+              </svg>
+            </figure>
+            <div class="p-6"><h3 class="font-display text-2xl font-bold text-white">边缘计算控制网关</h3><p class="mt-3 text-sm leading-6 text-slate-300">支持 Modbus TCP/RTU、Profinet，秒级解析传感器、光电开关、急停状态与设备心跳，向 WCS 输出标准事件流。</p></div>
+          </article>
+
+          <article class="card overflow-hidden rounded-[2rem]">
+            <figure class="border-b border-slate-700 bg-slate-950 p-5">
+              <svg class="device-svg" viewBox="0 0 520 260" role="img" aria-label="PTL and DWS illustration">
+                <rect x="58" y="86" width="404" height="54" rx="27" fill="#334155"/><g fill="#172033" stroke="#f97316" stroke-width="2"><rect x="78" y="54" width="66" height="42" rx="8"/><rect x="158" y="54" width="66" height="42" rx="8"/><rect x="238" y="54" width="66" height="42" rx="8"/></g><g fill="#f97316"><circle cx="111" cy="75" r="9"/><circle cx="191" cy="75" r="9"/><circle cx="271" cy="75" r="9"/></g>
+                <rect x="330" y="42" width="94" height="74" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/><path d="M346 70 h62 M346 90 h46" stroke="#38bdf8" stroke-width="4"/>
+                <path d="M125 155 h270" stroke="#475569" stroke-width="16" stroke-linecap="round"/><rect x="210" y="134" width="84" height="42" rx="8" fill="#172033" stroke="#cbd5e1"/>
+                <text x="75" y="232" fill="#94a3b8" font-size="20">PTL · RFID gate · DWS dimension & weight</text>
+              </svg>
+            </figure>
+            <div class="p-6"><h3 class="font-display text-2xl font-bold text-white">PTL / RFID / DWS 设备层</h3><p class="mt-3 text-sm leading-6 text-slate-300">智能亮灯拣选毫秒级响应；RFID 通道门与体积测量 DWS 支持流水线动态过账、重容差与单据强校验。</p></div>
+          </article>
+
+          <article class="card overflow-hidden rounded-[2rem]">
+            <figure class="border-b border-slate-700 bg-slate-950 p-5">
+              <svg class="device-svg" viewBox="0 0 520 260" role="img" aria-label="PDA scan-priority terminal illustration">
+                <rect x="188" y="28" width="144" height="198" rx="22" fill="#172033" stroke="#f97316" stroke-width="3"/><rect x="204" y="56" width="112" height="118" rx="10" fill="#0f172a" stroke="#475569"/><path d="M222 86 h74 M222 112 h48 M222 138 h70" stroke="#38bdf8" stroke-width="5" stroke-linecap="round"/><rect x="231" y="188" width="58" height="18" rx="9" fill="#f97316"/>
+                <path d="M332 88 h76" stroke="#f97316" stroke-width="5" stroke-linecap="round"/><path d="M408 88 l-14 -10 M408 88 l-14 10" stroke="#f97316" stroke-width="5" stroke-linecap="round"/>
+                <path d="M112 88 h76" stroke="#38bdf8" stroke-width="5" stroke-linecap="round"/><path d="M112 88 l14 -10 M112 88 l14 10" stroke="#38bdf8" stroke-width="5" stroke-linecap="round"/>
+                <text x="119" y="246" fill="#94a3b8" font-size="20">Scan-Priority · full-screen HTML5 PDA</text>
+              </svg>
+            </figure>
+            <div class="p-6"><h3 class="font-display text-2xl font-bold text-white">工业级 PDA 手持终端</h3><p class="mt-3 text-sm leading-6 text-slate-300">扫描优先（Scan-Priority）交互，扣动扳机即驱动业务流；HTML5 全屏沉浸式，支持收货看板、Settlement 确认屏、大字体、防误触与弱网缓存。</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="agent" class="border-y border-slate-800 bg-slate-950/55 py-16">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
+          <div class="lg:sticky lg:top-28">
+            <p class="mb-3 text-sm font-bold uppercase tracking-[.36em] text-orange">AI Agent Brain</p>
+            <h2 class="rail-title font-display text-4xl font-bold tracking-tight text-white md:text-5xl">AI 不做聊天摆设，负责把异常变成可执行的路径重写。</h2>
+            <p class="mt-5 text-lg leading-8 text-slate-300">Agent 持续读取订单截单时间、库存批次、设备负载、格口空闲率、路径拥塞、硬件宕机与人工站点产能，再把建议落到 WES/WCS 的任务与设备动作。</p>
+          </div>
+          <div class="grid gap-5">
+            <article class="card rounded-[1.7rem] p-6"><h3 class="font-display text-2xl font-bold text-white"><i class="fa-solid fa-wave-square mr-3 text-orange"></i>自适应波次重组</h3><p class="mt-3 leading-7 text-slate-300">实时抓取截单时间、3D-Sort 格口空闲率、交通热力图、拣选站排队长度与承运商集包窗口，动态重组最优波次。</p></article>
+            <article class="card rounded-[1.7rem] p-6"><h3 class="font-display text-2xl font-bold text-white"><i class="fa-solid fa-kit-medical mr-3 text-orange"></i>系统自愈与博弈</h3><p class="mt-3 leading-7 text-slate-300">感知某段输送线、某台 AirRob、某个 PTL 格口或 DWS 复秤点不可用后，秒级重写任务路径，货物自动 Rerouting，业务不触发停机。</p></article>
+            <article class="card rounded-[1.7rem] p-6"><h3 class="font-display text-2xl font-bold text-white"><i class="fa-solid fa-comments mr-3 text-orange"></i>自然语言接口（LLM）</h3><p class="mt-3 leading-7 text-slate-300">管理员可用普通话下达调度指令，例如“把华东 B2C 截单前 40 分钟订单优先推到 3D-Sort 二层格口，暂停低优先级补货”。</p></article>
+            <article class="card rounded-[1.7rem] p-6"><h3 class="font-display text-2xl font-bold text-white"><i class="fa-solid fa-wand-magic-sparkles mr-3 text-orange"></i>AI 生成 BPMN 工作流</h3><p class="mt-3 leading-7 text-slate-300">一句话描述入库上架流程，AI 确认搬运设备、工位操作、分配方式与超时策略，然后生成可执行的 Workflow Definition。</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="examples" class="py-16">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mb-10 max-w-4xl">
+          <p class="mb-3 text-sm font-bold uppercase tracking-[.36em] text-orange">Deployment Scenarios</p>
+          <h2 class="rail-title font-display text-4xl font-bold tracking-tight text-white md:text-5xl">典型应用场景：从业务复杂度到设备控制点都能落到可执行方案。</h2>
+          <p class="mt-5 text-lg leading-8 text-slate-300">以下场景覆盖多货主仓、自动化分拣线与 AI 工作流配置，适合用于售前方案、项目评估和上线后运营复盘。</p>
+        </div>
+        <div class="grid gap-6 lg:grid-cols-3">
+          <article class="card rounded-[2rem] p-6">
+            <div class="mb-5 rounded-2xl border border-slate-700 bg-slate-950/70 p-5">
+              <div class="mb-4 flex items-center justify-between text-xs text-slate-500"><span>3PL CONTROL MODEL</span><span>LIVE</span></div>
+              <div class="grid grid-cols-2 gap-3 text-sm">
+                <div class="rounded-xl bg-slate-900 p-3 text-slate-300"><i class="fa-solid fa-building-user mr-2 text-orange"></i>多货主</div>
+                <div class="rounded-xl bg-slate-900 p-3 text-slate-300"><i class="fa-solid fa-warehouse mr-2 text-cyan"></i>多仓</div>
+                <div class="rounded-xl bg-slate-900 p-3 text-slate-300"><i class="fa-solid fa-file-invoice-dollar mr-2 text-orange"></i>结算规则</div>
+                <div class="rounded-xl bg-slate-900 p-3 text-slate-300"><i class="fa-solid fa-truck-fast mr-2 text-cyan"></i>承运商</div>
+              </div>
+            </div>
+            <span class="tag rounded-full px-3 py-1 text-xs font-bold">场景 01</span>
+            <h3 class="mt-4 font-display text-2xl font-bold text-white">3PL 多客户仓：多仓、多货主、多承运商</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-400">多货主库存隔离、跨仓主数据共享、承运商规则、电子面单直连与费用结算统一进入 WMS 事实层。</p>
+          </article>
+          <article class="card rounded-[2rem] p-6">
+            <div class="mb-5 rounded-2xl border border-slate-700 bg-slate-950/70 p-5">
+              <div class="mb-4 flex items-center justify-between text-xs text-slate-500"><span>WCS DEVICE LOOP</span><span>SYNC</span></div>
+              <div class="space-y-3 text-sm text-slate-300">
+                <div class="flex items-center gap-3"><span class="h-2 w-2 rounded-full bg-orange"></span>输送线任务下发</div>
+                <div class="connector"></div>
+                <div class="flex items-center gap-3"><span class="h-2 w-2 rounded-full bg-cyan"></span>DWS 称重体积校验</div>
+                <div class="connector"></div>
+                <div class="flex items-center gap-3"><span class="h-2 w-2 rounded-full bg-orange"></span>RFID / PTL 回传确认</div>
+              </div>
+            </div>
+            <span class="tag rounded-full px-3 py-1 text-xs font-bold">场景 02</span>
+            <h3 class="mt-4 font-display text-2xl font-bold text-white">WCS 直驱：输送线 + PTL + DWS + RFID</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-400">输送线、PTL、RFID、DWS 与边缘网关统一接入 WCS，按任务状态回传称重、体积、标签与过账结果。</p>
+          </article>
+          <article class="card rounded-[2rem] p-6">
+            <div class="mb-5 rounded-2xl border border-slate-700 bg-slate-950/70 p-5">
+              <div class="mb-4 flex items-center justify-between text-xs text-slate-500"><span>WORKFLOW GRAPH</span><span>PUBLISHED</span></div>
+              <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-3 text-center text-xs text-slate-300">
+                <div class="rounded-xl bg-slate-900 p-3">RCS_CLIENT</div><i class="fa-solid fa-arrow-right text-orange"></i>
+                <div class="rounded-xl bg-slate-900 p-3">STATION</div>
+                <div class="rounded-xl bg-slate-900 p-3">PTL / DWS</div><i class="fa-solid fa-arrow-right text-cyan"></i>
+                <div class="rounded-xl bg-slate-900 p-3">COMPLETE</div>
+              </div>
+            </div>
+            <span class="tag rounded-full px-3 py-1 text-xs font-bold">场景 03</span>
+            <h3 class="mt-4 font-display text-2xl font-bold text-white">AI 生成流程：新业务类型配置即上线</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-400">通过 Workflow Definition 配置节点、设备、参数映射、异常分支与重试策略，新业务无需重新开发主流程。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="decision" class="border-y border-slate-800 bg-slate-950/45 py-16">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mb-10 grid gap-6 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
+          <div>
+            <p class="mb-3 text-sm font-bold uppercase tracking-[.36em] text-orange">Evaluation Output</p>
+            <h2 class="rail-title font-display text-4xl font-bold tracking-tight text-white md:text-5xl">联系之后，客户需要拿到可决策的东西。</h2>
+          </div>
+          <p class="text-lg leading-8 text-slate-300">第一次沟通不做泛泛演示，而是把仓库约束拆成业务流、库存流、设备流、异常流四张图，判断 OrbiFlow 是否能降低集成风险和上线不确定性。</p>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div class="card rounded-2xl p-5"><div class="mono mb-4 text-sm font-bold text-orange">01 / FLOW</div><h3 class="font-bold text-white">业务流程拆解</h3><p class="mt-2 text-sm leading-6 text-slate-400">入库、库存、出库、退货、盘点、补货、结算与异常补偿流程边界。</p></div>
+          <div class="card rounded-2xl p-5"><div class="mono mb-4 text-sm font-bold text-orange">02 / DEVICE</div><h3 class="font-bold text-white">设备控制清单</h3><p class="mt-2 text-sm leading-6 text-slate-400">PLC、输送线、机器人、PTL、RFID、DWS、PDA 的动作、事件与协议风险。</p></div>
+          <div class="card rounded-2xl p-5"><div class="mono mb-4 text-sm font-bold text-orange">03 / BOTTLENECK</div><h3 class="font-bold text-white">瓶颈与节拍判断</h3><p class="mt-2 text-sm leading-6 text-slate-400">按订单结构、截单时间、站点产能、格口资源与设备负载判断拥塞点。</p></div>
+          <div class="card rounded-2xl p-5"><div class="mono mb-4 text-sm font-bold text-orange">04 / ROADMAP</div><h3 class="font-bold text-white">上线分阶段路径</h3><p class="mt-2 text-sm leading-6 text-slate-400">从主数据、接口、设备联调、灰度切流到爬坡运营的实施顺序。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="handover" class="pb-20">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="overflow-hidden rounded-[2.4rem] border border-orange/35 bg-gradient-to-br from-slate-900 via-slate-950 to-orange/10 shadow-glow">
+          <div class="grid gap-0 lg:grid-cols-[.9fr_1.1fr]">
+            <div class="border-b border-slate-700 p-8 lg:border-b-0 lg:border-r lg:p-10">
+              <p class="mb-3 text-sm font-bold uppercase tracking-[.36em] text-orange">Turnkey Scope</p>
+              <h2 class="font-display text-4xl font-bold tracking-tight text-white">交钥匙不是承诺词，是交付边界。</h2>
+              <p class="mt-5 leading-8 text-slate-300">OrbiFlow.ai 交付系统蓝图、主数据梳理、设备选型、WCS 驱动、现场节拍仿真、PDA 原型、PLC 联调到上线爬坡。客户不需要在软件商、集成商、机器人厂商与 IT 中间做翻译。</p>
+            </div>
+            <div class="grid gap-px bg-slate-700 md:grid-cols-2">
+              <div class="bg-slate-950/88 p-6"><h3 class="font-bold text-white">蓝图与主数据</h3><p class="mt-2 text-sm leading-6 text-slate-400">库位编码、容器体系、批次策略、单据流、承运商规则、SKU 尺寸与效期策略。</p></div>
+              <div class="bg-slate-950/88 p-6"><h3 class="font-bold text-white">设备与协议</h3><p class="mt-2 text-sm leading-6 text-slate-400">AirRob、3D-Sort、小黄人、PTL、RFID、DWS、边缘网关、PLC 与输送线。</p></div>
+              <div class="bg-slate-950/88 p-6"><h3 class="font-bold text-white">作业与异常</h3><p class="mt-2 text-sm leading-6 text-slate-400">盲收、理货、盘点、波次、补货、复核、称重、错分、宕机与补偿任务。</p></div>
+              <div class="bg-slate-950/88 p-6"><h3 class="font-bold text-white">上线与爬坡</h3><p class="mt-2 text-sm leading-6 text-slate-400">仿真压测、灰度切流、现场看板、SLA 追踪、故障演练与 SOP 固化。</p></div>
+            </div>
+          </div>
+          <div class="hairline"></div>
+          <div id="contact" class="grid gap-6 p-8 lg:grid-cols-[1fr_.95fr] lg:p-10">
+            <div>
+              <div class="font-display text-3xl font-bold text-white">把仓库真实约束发来，先做一次技术评估。</div>
+              <p class="mt-3 leading-7 text-slate-400">建议附上订单结构、SKU 维度、峰值订单、当前系统、设备清单、截单规则和最痛的三个异常。我们会按业务流、控制流、设备流拆解是否适合 OrbiFlow。</p>
+              <div class="mt-5 flex flex-wrap gap-3 text-sm">
+                <span class="cold-tag rounded-full px-3 py-1">订单 / 波次 / 截单</span>
+                <span class="cold-tag rounded-full px-3 py-1">SKU / 批次 / 效期</span>
+                <span class="cold-tag rounded-full px-3 py-1">PLC / PTL / RFID / DWS</span>
+                <span class="cold-tag rounded-full px-3 py-1">异常与补偿任务</span>
+              </div>
+            </div>
+            <div class="rounded-[1.5rem] border border-slate-700 bg-slate-950/70 p-6">
+              <h3 class="font-display text-2xl font-bold text-white">评估邮件模板</h3>
+              <ul class="mt-4 space-y-2 text-sm leading-6 text-slate-300">
+                <li><i class="fa-solid fa-check mr-2 text-orange"></i>仓库类型：3PL / 电商 / 制造 / 冷链 / 医药</li>
+                <li><i class="fa-solid fa-check mr-2 text-orange"></i>规模：日均订单、峰值订单、SKU、库位、人员班次</li>
+                <li><i class="fa-solid fa-check mr-2 text-orange"></i>设备：输送线、AMR、PTL、RFID、DWS、PLC、自动仓</li>
+                <li><i class="fa-solid fa-check mr-2 text-orange"></i>目标：降本、提效、上线周期、升级旧系统或新增自动化</li>
+              </ul>
+              <a href="mailto:hello@orbiflow.ai?subject=OrbiFlow%20%E4%BB%93%E5%BA%93%E8%87%AA%E5%8A%A8%E5%8C%96%E8%AF%84%E4%BC%B0&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%83%B3%E8%AF%84%E4%BC%B0%20OrbiFlow%20%E6%96%B9%E6%A1%88%E3%80%82%0A%E4%BB%93%E5%BA%93%E7%B1%BB%E5%9E%8B%EF%BC%9A%0A%E6%97%A5%E5%9D%87%E8%AE%A2%E5%8D%95/%E5%B3%B0%E5%80%BC%E8%AE%A2%E5%8D%95%EF%BC%9A%0ASKU%20%E6%95%B0%E9%87%8F%EF%BC%9A%0A%E7%8E%B0%E6%9C%89%E7%B3%BB%E7%BB%9F%EF%BC%88ERP/OMS/TMS/WMS%EF%BC%89%EF%BC%9A%0A%E7%8E%B0%E6%9C%89%E8%AE%BE%E5%A4%87%EF%BC%88%E8%BE%93%E9%80%81%E7%BA%BF/AMR/PTL/RFID/DWS/PLC%EF%BC%89%EF%BC%9A%0A%E4%B8%BB%E8%A6%81%E9%97%AE%E9%A2%98%EF%BC%9A" class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-orange px-6 py-3 font-bold text-white shadow-glow hover:bg-orange/90">发送评估需求 <i class="fa-solid fa-arrow-right ml-3"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800 bg-slate-950/80">
+    <div class="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-8 text-sm text-slate-500 md:flex-row md:items-center md:justify-between lg:px-8">
+      <div class="flex items-center gap-4"><img src="assets/orbiflow-mark-tight.png" alt="" class="footer-brand-symbol" aria-hidden="true" /><span>© 2026 OrbiFlow.ai. Industrial control fabric for intralogistics.</span></div>
+      <div class="flex flex-wrap gap-4"><span>WMS</span><span>WES</span><span>WCS</span><span>AI Agent</span><span>IoT Edge</span><span>Robotics</span></div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const translations = { en: {"使用数据": "Proof Points", "功能点": "Features", "系统界面": "Screens", "硬件产品": "Hardware", "应用场景": "Scenarios", "方案评估": "Assessment", "预约技术评估": "Book Assessment", "WMS + WCS 一体化仓储平台｜从订单到设备动作，一套系统全贯通": "Integrated WMS + WCS platform | From order logic to physical device actions", "不止管库存，": "Beyond inventory records,", "直接调度仓库的物理世界。": "orchestrate the physical warehouse.", "OrbiFlow.ai 面向正在自动化升级的中大型仓库（3PL / 电商 / 制造业），交付自研 WMS/WES/WCS、AI Agent 与机器人硬件的软硬一体方案。目标很直接：降低自动化项目定制开发成本、缩短新仓上线周期、避免被单一设备厂商绑定。": "OrbiFlow.ai serves mid-to-large warehouses upgrading toward automation across 3PL, e-commerce and manufacturing. We deliver a software-hardware platform with in-house WMS/WES/WCS, AI Agent and robotics integration. The goal is direct: reduce custom development cost, shorten new-warehouse launch cycles, and avoid lock-in to one equipment vendor.", "预约 30 分钟技术评估": "Book a 30-min technical assessment", "先看是否适合": "Check Fit First", "适合": "Fit", "多仓、多货主、自动化设备混合现场": "Multi-warehouse, multi-client, mixed automation sites", "解决": "Solves", "WMS、WCS、机器人厂商割裂": "Disconnected WMS, WCS and robot vendors", "交付": "Delivers", "蓝图、驱动、联调、爬坡一体化": "Blueprint, drivers, commissioning and ramp-up", "实时运营控制台": "Live Operations Console", "Dashboard 自动刷新": "Dashboard auto-refresh", "任务趋势与节拍监控": "Task trend and takt monitoring", "作业状态全追踪": "Full task-state traceability", "conveyor.segment.B7 fault → WES rewrite path → tote rerouted to AirRob aisle C → SLA unaffected": "conveyor.segment.B7 fault → WES rewrites path → tote rerouted to AirRob aisle C → SLA unaffected", "如果你正在评估仓库解决方案，先看这四个问题。": "Evaluating a warehouse solution? Start with these four questions.", "OrbiFlow 更适合业务复杂、设备复杂、现场异常多的仓库；如果只是单仓轻量进销存，传统 WMS 会更简单。": "OrbiFlow fits complex operations, mixed equipment and exception-heavy sites. For a simple single-warehouse stock system, a traditional WMS may be simpler.", "系统割裂": "System Fragmentation", "WMS、WCS、RCS、PTL、DWS 各有状态，异常靠人工微信群同步。": "WMS, WCS, RCS, PTL and DWS each keep their own state; exceptions are synchronized manually.", "现场异常吞噬产能": "Exceptions Consume Capacity", "盲收、错分、堵线、复秤失败、格口满载会让标准流程频繁中断。": "Blind receiving, mis-sorts, conveyor jams, re-weigh failures and full chutes constantly interrupt standard flows.", "新业务上线慢": "Slow New-Scenario Launch", "每个客户、渠道、承运商或设备变更都需要重新开发和发版。": "Every new client, channel, carrier or device change requires redevelopment and release.", "缺少可审计闭环": "No Auditable Closed Loop", "订单、库存、容器、设备动作、人工确认和异常补偿不能串成一条链。": "Orders, inventory, containers, device actions, manual confirmations and exception recovery cannot be traced as one chain.", "客户真正买的是上线确定性、自动化可控性和长期扩展成本。": "What customers buy is launch certainty, automation control and long-term extensibility.", "OrbiFlow 的价值不只在模块齐全，而是在业务规则、设备动作和异常补偿之间建立同一套事实链路。": "OrbiFlow is not just a collection of modules. It builds one factual chain across business rules, device actions and exception recovery.", "降低定制开发成本": "Reduce Custom Development", "通过 Job-Workflow、Filter 模板、Assignment Mode 和设备对象模型，把新场景从代码开发转为配置发布。": "Job-Workflow, Filter templates, Assignment Mode and device objects turn new scenarios from code work into configurable releases.", "缩短新仓上线周期": "Shorten New-Warehouse Launch", "主数据、库位、容器、设备、工作站、任务状态机复用，减少每个仓从零建模的时间。": "Reuse master data, locations, containers, devices, stations and task-state models instead of rebuilding each warehouse from scratch.", "降低设备绑定风险": "Lower Equipment Lock-in", "协议适配层统一封装 PLC、AMR、PTL、RFID、DWS 等设备，换设备优先改配置，不改业务逻辑。": "The protocol layer encapsulates PLC, AMR, PTL, RFID and DWS devices so device changes are handled first by configuration, not business logic rewrites.", "提升异常恢复能力": "Improve Exception Recovery", "盲收、错分、堵线、格口满、复秤失败与设备宕机进入补偿任务和 Rerouting，不靠人工记忆兜底。": "Blind receiving, mis-sorts, jams, full chutes, re-weigh failures and device downtime become compensation tasks and Rerouting, not human memory workarounds.", "用数字讲清楚：OrbiFlow 到底能覆盖什么、缩短什么、降低什么风险。": "Make the value numerical: what OrbiFlow covers, shortens and de-risks.", "这些不是装饰数字，而是售前评估、方案设计和上线验收会逐项核对的能力口径。现场数据进入评估后，可进一步测算节拍、瓶颈、ROI 与上线分期。": "These are not vanity numbers. They are capability checkpoints for presales assessment, solution design and launch acceptance. With site data, we further calculate takt, bottlenecks, ROI and rollout phases.", "2周": "2 wks", "评估 Sprint": "Assessment Sprint", "完成业务流、库存流、设备流、异常流梳理，并输出上线范围与集成风险清单。": "Map business, inventory, device and exception flows, then output launch scope and integration risks.", "通信中间件依赖": "Middleware Dependency", "WCS 原生直连 PLC、输送线、PTL、RFID、DWS 与机器人控制系统。": "WCS connects natively to PLC, conveyors, PTL, RFID, DWS and robot control systems.", "工作站操作模式": "Station Operation Modes", "7 种出库、3 种入库、9 种库内操作，覆盖 Pick & Pack、Pick To Wall、合托、拆托等。": "7 outbound, 3 inbound and 9 internal operation modes covering Pick & Pack, Pick To Wall, pallet merge/split and more.", "标准集成方式": "Standard Integration Methods", "REST API、Webhook、RabbitMQ/Kafka 消息队列、SFTP CSV 文件交换。": "REST API, Webhook, RabbitMQ/Kafka message queues and SFTP CSV file exchange.", "运营看板刷新": "Operations Dashboard Refresh", "订单、任务、异常、工作流健康度与每小时完成量进入实时运营视图。": "Orders, tasks, exceptions, workflow health and hourly throughput enter a live operations view.", "设备动作反馈": "Device-Action Feedback", "PTL 亮灯、输送线放行、扫码确认、分拣投递按毫秒级事件回传建模。": "PTL lights, conveyor release, scan confirmation and sort drops are modeled as millisecond-level events.", "LP 容器体系": "LP Container Model", "ILP / HLP / CLP / SLP 等容器类型，支持嵌套、整体移动和库存追溯。": "ILP / HLP / CLP / SLP container types with nesting, whole-container moves and inventory traceability.", "3层": "3 layers", "权限与数据隔离": "Permissions & Data Isolation", "租户、仓库、功能三层权限模型，多仓切换、数据隔离、主数据共享。": "Tenant, warehouse and function-level permissions with multi-warehouse switching, data isolation and shared master data.", "主要功能点：按模块清楚列出来，让懂行的人快速判断覆盖面。": "Core functions are laid out by module so experienced buyers can judge coverage quickly.", "OrbiFlow 以 WMS + WCS + Workflow + 设备直驱为主线组织功能。每个模块都是可配置、可追踪、可审计的业务对象，而不是分散的定制页面。": "OrbiFlow organizes functions around WMS + WCS + Workflow + direct device control. Each module is a configurable, traceable and auditable business object, not a set of isolated custom pages.", "Dashboard 运营看板": "Dashboard", "实时 KPI、订单趋势、异常预警、当日作业统计，支持 30s 自动刷新；管理层一屏判断吞吐、积压与异常优先级。": "Real-time KPIs, order trends, exception alerts and daily operation stats with 30s refresh; leaders see throughput, backlog and exception priority on one screen.", "MDM 主数据": "MDM Master Data", "组织、客户、商品、行业属性、危化品、承运商、地址统一维护；减少多仓重复录入和口径不一致。": "Unified organizations, customers, products, industry attributes, hazmat, carriers and addresses; reduces duplicate entry and inconsistent definitions.", "Facility 仓库设施": "Facility", "仓库、库位、工作站、设备、RCS 客户端、PTL、容器、虚拟位置组 VLG 结构化建模；扩仓不重写底层逻辑。": "Structured modeling for warehouses, locations, stations, devices, RCS clients, PTL, containers and VLGs; expansion does not rewrite core logic.", "Inventory 库存生命周期": "Inventory Lifecycle", "库存查询、锁定、调整、活动日志、动态属性映射、Min/Max 补货与 LP 追溯；降低超卖、错批和人工查账成本。": "Inventory query, lock, adjustment, activity logs, dynamic attributes, Min/Max replenishment and LP traceability; reduces overselling, wrong batches and manual reconciliation.", "Cycle Count 动盘盘点": "Cycle Count", "盘点计划、任务、结果、差异标记（DISCREPANCY / WARNING）；动盘不锁库，盘点不牺牲出入库节拍。": "Count plans, tasks, results and discrepancy flags; dynamic counting avoids locking inventory or sacrificing inbound/outbound takt.", "Inbound 入库": "Inbound", "收货单、Dock 预约、卸货、LP 绑定、批次/序列号、标签打印、Blind Receiving 与策略上架；突发到货不断流。": "Receiving orders, dock appointments, unloading, LP binding, lot/serial numbers, label printing, Blind Receiving and strategy-based putaway; unexpected arrivals keep moving.", "Outbound 出库": "Outbound", "订单接入、库存预分配、订单计划、智能派发、Pick-to-Tote、Pick-to-Belt、打包、装车与发运记录；减少人工拆单。": "Order intake, inventory pre-allocation, order planning, intelligent dispatch, Pick-to-Tote, Pick-to-Belt, packing, loading and shipping records; reduces manual order splitting.", "Task 任务中枢": "Task Center", "收货、上架、移动、拣货、打包、合托、组装、暂存、补货、装车、退库任务统一状态机；每个动作可追踪可重试。": "Unified state machine for receiving, putaway, movement, picking, packing, merge, assembly, staging, replenishment, loading and return tasks; every action is traceable and retryable.", "Job-Workflow 引擎": "Job-Workflow Engine", "零代码定义流程，拖拽节点、判断分支、并行执行、异常重试；新客户、新渠道、新设备场景配置即上线。": "No-code process definition with drag nodes, branches, parallel execution and exception retries; new clients, channels and devices go live by configuration.", "Scheduler 调度器": "Scheduler", "触发器、假期、执行日志、Cron 自动派发；订单释放、补货、波次和报表任务不依赖人工定时点击。": "Triggers, holidays, execution logs and Cron dispatch; order release, replenishment, waves and reports do not rely on manual timing.", "设备总览、拓扑布局、PLC 寄存器、AGV/AMR 车队、通信日志、仿真控制与回调记录；运维能定位到设备动作。": "Device overview, topology, PLC registers, AGV/AMR fleets, communication logs, simulation controls and callbacks; operations can locate device-level actions.", "工作站操作、PDA 扫描优先（Scan-Priority）、大字体、防误触、弱网本地缓存；一线人员少看屏、多扫描。": "Station operations, Scan-Priority PDA, large text, mis-touch prevention and weak-network cache; frontline staff scan more and look at screens less.", "把“功能点”落到真实界面，不只是一张技术架构图。": "Turn capabilities into real screens, not just architecture diagrams.", "运营 Dashboard、Workflow 编排、AI Assistant、订单与库存页面贯穿同一套权限、主数据与任务状态机。管理端看策略，工作站看执行，PDA 看下一步动作。": "Operations Dashboard, Workflow orchestration, AI Assistant, order and inventory pages share the same permissions, master data and task state machine. Managers see strategy, stations see execution, PDA users see the next action.", "Dashboard：仓库运营全貌": "Dashboard: Warehouse Overview", "订单趋势、任务进度、异常预警、当日作业统计，给仓库经理与供应链 VP 看同一套事实。": "Order trends, task progress, exception alerts and daily stats give warehouse managers and supply-chain VPs one shared fact base.", "Workflow：零代码流程编排": "Workflow: No-code Orchestration", "节点拖拽、设备选择、参数映射、异常分支与重试策略，支撑新场景配置即上线。": "Drag nodes, select devices, map parameters, define exception branches and retry policies to launch new scenarios by configuration.", "AI Assistant：对话即操作": "AI Assistant: Conversation to Action", "库存查询、订单追踪、出入库管理、数据报表、异常预警；LLM 解析意图，系统校验权限。": "Inventory query, order tracking, inbound/outbound operations, reports and exception alerts; the LLM parses intent while the system enforces permissions.", "WMS 记录业务事实，WES 编排作业池，WCS 下发物理动作。": "WMS records business facts, WES orchestrates job pools, WCS sends physical actions.", "ASN / PO 标准核对，缺单、多货、混批与破损进入异常队列。": "ASN / PO standard checks route missing docs, overages, mixed lots and damage into exception queues.", "：无单突发到货生成临时批次与待挂账交易。": ": unexpected arrivals without documents generate temporary lots and pending settlement transactions.", "多层级 3D 逻辑库位、FIFO/FEFO 效期、防混放、动盘与异动盘点。": "Multi-level 3D logical locations, FIFO/FEFO expiry rules, anti-mixing, cycle counts and movement-based counts.", "Pick-to-Tote、Pick-to-Belt、耗材推荐、多承运商电子面单直连。": "Pick-to-Tote, Pick-to-Belt, packaging material recommendation and direct multi-carrier e-label connection.", "接管作业池：收货、上架、拣货、补货、盘点、复核任务交织。": "Takes over job pools: receiving, putaway, picking, replenishment, counting and review tasks are interleaved.", "根据设备实时负载、格口空闲率、交通热力图做": "Uses real-time device load, chute availability and traffic heatmaps for", "订单智能派发：Filter 模板、Assignment Mode、Cron 定时计划与异常排除。": "Intelligent order dispatch: Filter templates, Assignment Mode, Cron schedules and exception exclusion.", "动态波次重组，避免输送线堵点、机器人排队与格口饥饿。": "Dynamic wave recomposition avoids conveyor bottlenecks, robot queues and chute starvation.", "原生集成多品牌 PLC 驱动，无需第三方通信中间件。": "Natively integrates multi-brand PLC drivers without third-party communication middleware.", "直接控制堆垛机、四向穿梭车、输送线、PTL、RFID、DWS、AMR/RCS。": "Directly controls stackers, four-way shuttles, conveyors, PTL, RFID, DWS and AMR/RCS.", "设备总览、拓扑布局、PLC 寄存器监控、通信日志与仿真控制。": "Device overview, topology, PLC register monitoring, communication logs and simulation control.", "毫秒级屏蔽硬件差异，将设备事件回写业务事实层。": "Masks hardware differences at millisecond level and writes device events back to the business fact layer.", "设备层：机器人、IoT 设备与手持终端由同一个 WCS 直驱。": "Device layer: robots, IoT devices and handheld terminals are driven by the same WCS.", "每个硬件产品都对应明确的现场用途、控制对象与 WCS 回传事件。OrbiFlow 将机器人、IoT 设备、传感器与手持终端抽象为统一设备对象，直接进入任务调度与异常处理链路。": "Each hardware product maps to field use, control objects and WCS return events. OrbiFlow abstracts robots, IoT devices, sensors and handhelds into unified device objects that enter scheduling and exception handling directly.", "AirRob 空中机器人": "AirRob Overhead Robot", "悬挂式料箱到人系统，超高密度立体调度。WCS 管理轨道占用、吊箱动作、站点排队、异常绕行与 Rerouting。": "Overhead tote-to-person system for high-density 3D scheduling. WCS manages track occupancy, tote lifting, station queues, exception bypass and Rerouting.", "3D-Sort 立体分拣系统": "3D-Sort System", "动态格口分配，应对大促千万级包裹错层高速分拣。WES 按承运商、线路、截单时间与格口空闲率重组波次。": "Dynamic chute allocation for high-speed multi-level sorting during peak campaigns. WES recomposes waves by carrier, route, cutoff time and chute availability.", "小黄人分拣机器人": "Mini Sorting Robots", "柔性台面分拣方案，WCS 实时下发小车行进轨迹、避让策略、投递动作与缺口重投策略。": "Flexible tabletop sorting. WCS issues robot routes, avoidance policies, drop actions and re-drop logic in real time.", "边缘计算控制网关": "Edge Control Gateway", "支持 Modbus TCP/RTU、Profinet，秒级解析传感器、光电开关、急停状态与设备心跳，向 WCS 输出标准事件流。": "Supports Modbus TCP/RTU and Profinet, parses sensors, photoeyes, E-stop states and heartbeats in seconds, then outputs standard event streams to WCS.", "智能亮灯拣选毫秒级响应；RFID 通道门与体积测量 DWS 支持流水线动态过账、重容差与单据强校验。": "PTL responds in milliseconds; RFID gates and DWS support dynamic conveyor posting, weight tolerance and strict document validation.", "工业级 PDA 手持终端": "Industrial PDA Terminal", "扫描优先（Scan-Priority）交互，扣动扳机即驱动业务流；HTML5 全屏沉浸式，支持收货看板、Settlement 确认屏、大字体、防误触与弱网缓存。": "Scan-Priority interaction drives business flows by trigger pull; full-screen HTML5 UX supports receiving dashboards, Settlement confirmation, large fonts, mis-touch prevention and weak-network cache.", "AI 不做聊天摆设，负责把异常变成可执行的路径重写。": "AI is not a chat ornament; it turns exceptions into executable path rewrites.", "Agent 持续读取订单截单时间、库存批次、设备负载、格口空闲率、路径拥塞、硬件宕机与人工站点产能，再把建议落到 WES/WCS 的任务与设备动作。": "The Agent continuously reads cutoff times, inventory lots, device loads, chute availability, path congestion, hardware downtime and station capacity, then turns recommendations into WES/WCS tasks and device actions.", "自适应波次重组": "Adaptive Wave Recomposition", "实时抓取截单时间、3D-Sort 格口空闲率、交通热力图、拣选站排队长度与承运商集包窗口，动态重组最优波次。": "Continuously reads cutoff times, 3D-Sort chute availability, traffic heatmaps, picking-station queues and carrier consolidation windows to recompose optimal waves.", "系统自愈与博弈": "System Self-healing", "感知某段输送线、某台 AirRob、某个 PTL 格口或 DWS 复秤点不可用后，秒级重写任务路径，货物自动 Rerouting，业务不触发停机。": "When a conveyor segment, AirRob, PTL chute or DWS re-weigh point becomes unavailable, task paths are rewritten in seconds and goods are Rerouted without stopping operations.", "自然语言接口（LLM）": "Natural Language Interface (LLM)", "管理员可用普通话下达调度指令，例如“把华东 B2C 截单前 40 分钟订单优先推到 3D-Sort 二层格口，暂停低优先级补货”。": "Managers can issue dispatch commands in natural language, such as prioritizing East China B2C orders 40 minutes before cutoff to 3D-Sort level-2 chutes and pausing low-priority replenishment.", "AI 生成 BPMN 工作流": "AI-generated BPMN Workflow", "一句话描述入库上架流程，AI 确认搬运设备、工位操作、分配方式与超时策略，然后生成可执行的 Workflow Definition。": "Describe an inbound putaway process in one sentence; AI confirms transport devices, station actions, assignment rules and timeout policies, then generates an executable Workflow Definition.", "典型应用场景：从业务复杂度到设备控制点都能落到可执行方案。": "Deployment scenarios: from business complexity to device controls, everything maps to an executable solution.", "以下场景覆盖多货主仓、自动化分拣线与 AI 工作流配置，适合用于售前方案、项目评估和上线后运营复盘。": "These scenarios cover multi-client warehouses, automated sorting lines and AI workflow configuration for presales, project assessment and post-launch operations review.", "多货主": "Multi-client", "多仓": "Multi-warehouse", "结算规则": "Settlement Rules", "承运商": "Carriers", "场景 01": "Scenario 01", "3PL 多客户仓：多仓、多货主、多承运商": "3PL Multi-client Warehouse: multi-warehouse, multi-client, multi-carrier", "多货主库存隔离、跨仓主数据共享、承运商规则、电子面单直连与费用结算统一进入 WMS 事实层。": "Client-level inventory isolation, cross-warehouse master data sharing, carrier rules, e-labels and billing settlement enter the WMS fact layer.", "输送线任务下发": "Conveyor task dispatch", "DWS 称重体积校验": "DWS weight/dimension validation", "RFID / PTL 回传确认": "RFID / PTL confirmation", "场景 02": "Scenario 02", "WCS 直驱：输送线 + PTL + DWS + RFID": "WCS Direct Drive: conveyor + PTL + DWS + RFID", "输送线、PTL、RFID、DWS 与边缘网关统一接入 WCS，按任务状态回传称重、体积、标签与过账结果。": "Conveyors, PTL, RFID, DWS and edge gateways connect into WCS and return weight, dimensions, labels and posting results by task state.", "场景 03": "Scenario 03", "AI 生成流程：新业务类型配置即上线": "AI-generated Process: configure new business types to go live", "通过 Workflow Definition 配置节点、设备、参数映射、异常分支与重试策略，新业务无需重新开发主流程。": "Configure nodes, devices, parameter mappings, exception branches and retry policies in Workflow Definition; new business flows do not require core redevelopment.", "联系之后，客户需要拿到可决策的东西。": "After contact, customers need decision-ready outputs.", "第一次沟通不做泛泛演示，而是把仓库约束拆成业务流、库存流、设备流、异常流四张图，判断 OrbiFlow 是否能降低集成风险和上线不确定性。": "The first conversation is not a generic demo. We break warehouse constraints into business, inventory, device and exception-flow views to judge whether OrbiFlow can reduce integration risk and launch uncertainty.", "业务流程拆解": "Business Flow Breakdown", "入库、库存、出库、退货、盘点、补货、结算与异常补偿流程边界。": "Boundaries for inbound, inventory, outbound, returns, counting, replenishment, settlement and exception recovery.", "设备控制清单": "Device Control List", "PLC、输送线、机器人、PTL、RFID、DWS、PDA 的动作、事件与协议风险。": "Actions, events and protocol risks for PLCs, conveyors, robots, PTL, RFID, DWS and PDA.", "瓶颈与节拍判断": "Bottleneck & Takt Assessment", "按订单结构、截单时间、站点产能、格口资源与设备负载判断拥塞点。": "Identify congestion points by order structure, cutoff times, station capacity, chute resources and device load.", "上线分阶段路径": "Phased Launch Roadmap", "从主数据、接口、设备联调、灰度切流到爬坡运营的实施顺序。": "Implementation sequence from master data, interfaces and device commissioning to gray cutover and ramp-up.", "交钥匙不是承诺词，是交付边界。": "Turnkey is not a slogan; it is a delivery boundary.", "OrbiFlow.ai 交付系统蓝图、主数据梳理、设备选型、WCS 驱动、现场节拍仿真、PDA 原型、PLC 联调到上线爬坡。客户不需要在软件商、集成商、机器人厂商与 IT 中间做翻译。": "OrbiFlow.ai delivers system blueprinting, master data cleanup, device selection, WCS drivers, site takt simulation, PDA prototypes, PLC commissioning and launch ramp-up. Customers do not need to translate between software vendors, integrators, robot vendors and IT.", "蓝图与主数据": "Blueprint & Master Data", "库位编码、容器体系、批次策略、单据流、承运商规则、SKU 尺寸与效期策略。": "Location coding, container model, lot strategy, document flow, carrier rules, SKU dimensions and expiry policies.", "设备与协议": "Devices & Protocols", "AirRob、3D-Sort、小黄人、PTL、RFID、DWS、边缘网关、PLC 与输送线。": "AirRob, 3D-Sort, mini sorting robots, PTL, RFID, DWS, edge gateways, PLCs and conveyors.", "作业与异常": "Operations & Exceptions", "盲收、理货、盘点、波次、补货、复核、称重、错分、宕机与补偿任务。": "Blind receiving, tallying, counting, waves, replenishment, review, weighing, mis-sorts, downtime and compensation tasks.", "上线与爬坡": "Launch & Ramp-up", "仿真压测、灰度切流、现场看板、SLA 追踪、故障演练与 SOP 固化。": "Simulation stress tests, gray cutover, site dashboards, SLA tracking, failure drills and SOP hardening.", "把仓库真实约束发来，先做一次技术评估。": "Send your real warehouse constraints for a technical assessment.", "建议附上订单结构、SKU 维度、峰值订单、当前系统、设备清单、截单规则和最痛的三个异常。我们会按业务流、控制流、设备流拆解是否适合 OrbiFlow。": "Include order structure, SKU dimensions, peak orders, current systems, device list, cutoff rules and your three most painful exceptions. We will break them down by business, control and device flows to assess fit.", "订单 / 波次 / 截单": "Orders / Waves / Cutoff", "SKU / 批次 / 效期": "SKU / Lot / Expiry", "异常与补偿任务": "Exceptions & Compensation Tasks", "评估邮件模板": "Assessment Email Template", "仓库类型：3PL / 电商 / 制造 / 冷链 / 医药": "Warehouse type: 3PL / e-commerce / manufacturing / cold chain / pharma", "规模：日均订单、峰值订单、SKU、库位、人员班次": "Scale: daily orders, peak orders, SKUs, locations, shifts", "设备：输送线、AMR、PTL、RFID、DWS、PLC、自动仓": "Devices: conveyors, AMR, PTL, RFID, DWS, PLC, AS/RS", "目标：降本、提效、上线周期、升级旧系统或新增自动化": "Goals: cost reduction, efficiency, launch cycle, legacy upgrade or new automation", "发送评估需求": "Send Assessment Request"}, ja: {"使用数据": "実績指標", "功能点": "機能", "系统界面": "画面", "硬件产品": "ハードウェア", "应用场景": "導入シーン", "方案评估": "評価依頼", "预约技术评估": "技術評価を予約", "WMS + WCS 一体化仓储平台｜从订单到设备动作，一套系统全贯通": "WMS + WCS 統合倉庫プラットフォーム｜注文から設備動作まで一気通貫", "不止管库存，": "在庫管理だけでなく、", "直接调度仓库的物理世界。": "倉庫の物理世界を直接制御する。", "OrbiFlow.ai 面向正在自动化升级的中大型仓库（3PL / 电商 / 制造业），交付自研 WMS/WES/WCS、AI Agent 与机器人硬件的软硬一体方案。目标很直接：降低自动化项目定制开发成本、缩短新仓上线周期、避免被单一设备厂商绑定。": "OrbiFlow.ai は、自動化へ移行する中大規模倉庫（3PL・EC・製造）向けに、自社開発の WMS/WES/WCS、AI Agent、ロボット連携を含むソフト・ハード一体型ソリューションを提供します。目的は明確です。個別開発コストを下げ、新倉庫の立ち上げ期間を短縮し、特定設備ベンダーへのロックインを避けます。", "预约 30 分钟技术评估": "30分の技術評価を予約", "先看是否适合": "適合性を確認", "适合": "適用", "多仓、多货主、自动化设备混合现场": "複数倉庫・複数荷主・自動化設備混在現場", "解决": "解決", "WMS、WCS、机器人厂商割裂": "WMS・WCS・ロボットベンダーの分断", "交付": "提供", "蓝图、驱动、联调、爬坡一体化": "設計、ドライバ、連調、立ち上げを一体化", "实时运营控制台": "リアルタイム運用コンソール", "Dashboard 自动刷新": "Dashboard 自動更新", "任务趋势与节拍监控": "タスク推移とタクト監視", "作业状态全追踪": "作業状態を全追跡", "如果你正在评估仓库解决方案，先看这四个问题。": "倉庫ソリューションを評価中なら、まずこの4点を確認してください。", "OrbiFlow 更适合业务复杂、设备复杂、现场异常多的仓库；如果只是单仓轻量进销存，传统 WMS 会更简单。": "OrbiFlow は、業務・設備・例外が複雑な倉庫に適しています。単一倉庫の軽量な在庫管理であれば、従来型 WMS の方がシンプルです。", "系统割裂": "システム分断", "WMS、WCS、RCS、PTL、DWS 各有状态，异常靠人工微信群同步。": "WMS、WCS、RCS、PTL、DWS が別々の状態を持ち、例外は人手で同期されています。", "现场异常吞噬产能": "現場例外が能力を消費", "盲收、错分、堵线、复秤失败、格口满载会让标准流程频繁中断。": "ブラインド入荷、誤仕分け、ライン詰まり、再計量失敗、シュート満杯が標準フローを頻繁に止めます。", "新业务上线慢": "新業務の立ち上げが遅い", "每个客户、渠道、承运商或设备变更都需要重新开发和发版。": "顧客、チャネル、配送会社、設備が変わるたびに再開発とリリースが必要です。", "缺少可审计闭环": "監査可能な閉ループがない", "订单、库存、容器、设备动作、人工确认和异常补偿不能串成一条链。": "注文、在庫、容器、設備動作、人の確認、例外補償を一本のチェーンとして追跡できません。", "客户真正买的是上线确定性、自动化可控性和长期扩展成本。": "顧客が本当に買うのは、立ち上げの確実性、自動化の制御性、長期拡張コストです。", "OrbiFlow 的价值不只在模块齐全，而是在业务规则、设备动作和异常补偿之间建立同一套事实链路。": "OrbiFlow の価値は機能の多さだけではありません。業務ルール、設備動作、例外補償を同じ事実チェーンで結びます。", "降低定制开发成本": "個別開発コストを削減", "通过 Job-Workflow、Filter 模板、Assignment Mode 和设备对象模型，把新场景从代码开发转为配置发布。": "Job-Workflow、Filter テンプレート、Assignment Mode、設備オブジェクトにより、新シーンをコード開発ではなく設定リリースに変えます。", "缩短新仓上线周期": "新倉庫の立ち上げ短縮", "主数据、库位、容器、设备、工作站、任务状态机复用，减少每个仓从零建模的时间。": "マスタ、ロケーション、容器、設備、ステーション、タスク状態機械を再利用し、倉庫ごとのゼロ設計を減らします。", "降低设备绑定风险": "設備ロックインを低減", "协议适配层统一封装 PLC、AMR、PTL、RFID、DWS 等设备，换设备优先改配置，不改业务逻辑。": "プロトコル層が PLC、AMR、PTL、RFID、DWS を統一的に包み、設備変更は業務ロジックではなく設定変更を優先します。", "提升异常恢复能力": "例外復旧力を向上", "盲收、错分、堵线、格口满、复秤失败与设备宕机进入补偿任务和 Rerouting，不靠人工记忆兜底。": "ブラインド入荷、誤仕分け、詰まり、シュート満杯、再計量失敗、設備停止を補償タスクと Rerouting に入れ、人の記憶に頼りません。", "用数字讲清楚：OrbiFlow 到底能覆盖什么、缩短什么、降低什么风险。": "数字で示す：OrbiFlow が何をカバーし、何を短縮し、どんなリスクを下げるか。", "这些不是装饰数字，而是售前评估、方案设计和上线验收会逐项核对的能力口径。现场数据进入评估后，可进一步测算节拍、瓶颈、ROI 与上线分期。": "これは飾りの数字ではなく、プリセールス評価、方案設計、立ち上げ検収で確認する能力指標です。現場データを入れれば、タクト、ボトルネック、ROI、導入フェーズも算出できます。", "2周": "2週間", "评估 Sprint": "評価 Sprint", "完成业务流、库存流、设备流、异常流梳理，并输出上线范围与集成风险清单。": "業務・在庫・設備・例外フローを整理し、立ち上げ範囲と統合リスク一覧を出力します。", "通信中间件依赖": "通信ミドルウェア依存", "WCS 原生直连 PLC、输送线、PTL、RFID、DWS 与机器人控制系统。": "WCS が PLC、コンベヤ、PTL、RFID、DWS、ロボット制御システムにネイティブ接続します。", "工作站操作模式": "ステーション操作モード", "7 种出库、3 种入库、9 种库内操作，覆盖 Pick & Pack、Pick To Wall、合托、拆托等。": "出庫7種、入庫3種、庫内9種の操作モードで、Pick & Pack、Pick To Wall、合托、拆托などをカバーします。", "标准集成方式": "標準連携方式", "REST API、Webhook、RabbitMQ/Kafka 消息队列、SFTP CSV 文件交换。": "REST API、Webhook、RabbitMQ/Kafka メッセージキュー、SFTP CSV ファイル交換。", "运营看板刷新": "運用ダッシュボード更新", "订单、任务、异常、工作流健康度与每小时完成量进入实时运营视图。": "注文、タスク、例外、ワークフロー健全性、時間別処理量をリアルタイム運用画面に集約します。", "设备动作反馈": "設備動作フィードバック", "PTL 亮灯、输送线放行、扫码确认、分拣投递按毫秒级事件回传建模。": "PTL 点灯、コンベヤ放行、スキャン確認、仕分け投入をミリ秒単位イベントとしてモデル化します。", "LP 容器体系": "LP 容器体系", "ILP / HLP / CLP / SLP 等容器类型，支持嵌套、整体移动和库存追溯。": "ILP / HLP / CLP / SLP などの容器タイプに対応し、ネスト、容器単位移動、在庫追跡をサポートします。", "3层": "3層", "权限与数据隔离": "権限とデータ分離", "租户、仓库、功能三层权限模型，多仓切换、数据隔离、主数据共享。": "テナント、倉庫、機能の3層権限モデル。複数倉庫切替、データ分離、マスタ共有に対応します。", "主要功能点：按模块清楚列出来，让懂行的人快速判断覆盖面。": "主要機能をモジュール別に整理し、詳しい担当者がカバレッジを素早く判断できます。", "OrbiFlow 以 WMS + WCS + Workflow + 设备直驱为主线组织功能。每个模块都是可配置、可追踪、可审计的业务对象，而不是分散的定制页面。": "OrbiFlow は WMS + WCS + Workflow + 設備直制御を軸に機能を構成します。各モジュールは設定可能、追跡可能、監査可能な業務オブジェクトです。", "Dashboard 运营看板": "Dashboard 運用看板", "实时 KPI、订单趋势、异常预警、当日作业统计，支持 30s 自动刷新；管理层一屏判断吞吐、积压与异常优先级。": "リアルタイム KPI、注文推移、例外アラート、当日作業統計を30秒自動更新。管理者はスループット、滞留、例外優先度を一画面で判断できます。", "MDM 主数据": "MDM マスタデータ", "组织、客户、商品、行业属性、危化品、承运商、地址统一维护；减少多仓重复录入和口径不一致。": "組織、顧客、商品、業界属性、危険品、配送会社、住所を統一管理し、複数倉庫での重複入力と定義不一致を減らします。", "Facility 仓库设施": "Facility 倉庫設備", "仓库、库位、工作站、设备、RCS 客户端、PTL、容器、虚拟位置组 VLG 结构化建模；扩仓不重写底层逻辑。": "倉庫、ロケーション、ステーション、設備、RCS クライアント、PTL、容器、VLG を構造化モデル化し、拡張時も基盤ロジックを書き換えません。", "Inventory 库存生命周期": "Inventory 在庫ライフサイクル", "库存查询、锁定、调整、活动日志、动态属性映射、Min/Max 补货与 LP 追溯；降低超卖、错批和人工查账成本。": "在庫照会、ロック、調整、活動ログ、動的属性、Min/Max 補充、LP 追跡により、過販売、ロット誤り、手作業照合を減らします。", "Cycle Count 动盘盘点": "Cycle Count 動的棚卸", "盘点计划、任务、结果、差异标记（DISCREPANCY / WARNING）；动盘不锁库，盘点不牺牲出入库节拍。": "棚卸計画、タスク、結果、差異フラグに対応。動的棚卸は在庫をロックせず、入出庫タクトを犠牲にしません。", "Inbound 入库": "Inbound 入庫", "收货单、Dock 预约、卸货、LP 绑定、批次/序列号、标签打印、Blind Receiving 与策略上架；突发到货不断流。": "入荷伝票、Dock 予約、荷卸し、LP 紐付け、ロット/シリアル、ラベル印刷、Blind Receiving、戦略上架に対応し、突発入荷も止めません。", "Outbound 出库": "Outbound 出庫", "订单接入、库存预分配、订单计划、智能派发、Pick-to-Tote、Pick-to-Belt、打包、装车与发运记录；减少人工拆单。": "注文取込、在庫事前引当、注文計画、智能派发、Pick-to-Tote、Pick-to-Belt、梱包、積込、出荷記録により手作業の分割を減らします。", "Task 任务中枢": "Task タスク中枢", "收货、上架、移动、拣货、打包、合托、组装、暂存、补货、装车、退库任务统一状态机；每个动作可追踪可重试。": "入荷、上架、移動、ピッキング、梱包、合托、組立、一時保管、補充、積込、返品を統一状態機械で管理し、各動作は追跡・再試行できます。", "Job-Workflow 引擎": "Job-Workflow エンジン", "零代码定义流程，拖拽节点、判断分支、并行执行、异常重试；新客户、新渠道、新设备场景配置即上线。": "ノーコードでフロー定義、ノードドラッグ、分岐、並列実行、例外リトライに対応。新顧客・新チャネル・新設備を設定で立ち上げます。", "Scheduler 调度器": "Scheduler スケジューラ", "触发器、假期、执行日志、Cron 自动派发；订单释放、补货、波次和报表任务不依赖人工定时点击。": "トリガー、休日、実行ログ、Cron 自動派发に対応し、注文解放、補充、波次、レポートを人手のクリックに依存させません。", "设备总览、拓扑布局、PLC 寄存器、AGV/AMR 车队、通信日志、仿真控制与回调记录；运维能定位到设备动作。": "設備一覧、トポロジー、PLC レジスタ、AGV/AMR フリート、通信ログ、シミュレーション、コールバックを管理し、運用担当が設備動作まで特定できます。", "工作站操作、PDA 扫描优先（Scan-Priority）、大字体、防误触、弱网本地缓存；一线人员少看屏、多扫描。": "ステーション操作、Scan-Priority PDA、大文字、防誤タッチ、弱ネットワークキャッシュにより、現場は画面を見るよりスキャンに集中できます。", "把“功能点”落到真实界面，不只是一张技术架构图。": "機能を実画面に落とし込み、単なる構成図で終わらせません。", "运营 Dashboard、Workflow 编排、AI Assistant、订单与库存页面贯穿同一套权限、主数据与任务状态机。管理端看策略，工作站看执行，PDA 看下一步动作。": "運用 Dashboard、Workflow、AI Assistant、注文・在庫画面は同じ権限、マスタ、タスク状態機械を共有します。管理端は戦略、ステーションは実行、PDA は次の動作を表示します。", "Dashboard：仓库运营全貌": "Dashboard：倉庫運用全体", "订单趋势、任务进度、异常预警、当日作业统计，给仓库经理与供应链 VP 看同一套事实。": "注文推移、タスク進捗、例外アラート、当日作業統計により、倉庫責任者とサプライチェーン VP が同じ事実を見ます。", "Workflow：零代码流程编排": "Workflow：ノーコード編成", "节点拖拽、设备选择、参数映射、异常分支与重试策略，支撑新场景配置即上线。": "ノードドラッグ、設備選択、パラメータマッピング、例外分岐、リトライ方針により、新シーンを設定で立ち上げます。", "AI Assistant：对话即操作": "AI Assistant：会話から操作へ", "库存查询、订单追踪、出入库管理、数据报表、异常预警；LLM 解析意图，系统校验权限。": "在庫照会、注文追跡、入出庫管理、レポート、例外アラートに対応。LLM が意図を解析し、システムが権限を検証します。", "WMS 记录业务事实，WES 编排作业池，WCS 下发物理动作。": "WMS は業務事実を記録し、WES は作業プールを編成し、WCS は物理動作を指示します。", "ASN / PO 标准核对，缺单、多货、混批与破损进入异常队列。": "ASN / PO 標準照合により、伝票不足、過入荷、混載、破損を例外キューへ送ります。", "：无单突发到货生成临时批次与待挂账交易。": "：伝票なしの突発入荷は一時ロットと未決済トランザクションを生成します。", "多层级 3D 逻辑库位、FIFO/FEFO 效期、防混放、动盘与异动盘点。": "多層 3D 論理ロケーション、FIFO/FEFO、有効期限、混載防止、動的棚卸に対応します。", "Pick-to-Tote、Pick-to-Belt、耗材推荐、多承运商电子面单直连。": "Pick-to-Tote、Pick-to-Belt、梱包資材推奨、複数配送会社の電子ラベル直結。", "接管作业池：收货、上架、拣货、补货、盘点、复核任务交织。": "作業プールを引き継ぎ、入荷、上架、ピッキング、補充、棚卸、検品を交錯実行します。", "根据设备实时负载、格口空闲率、交通热力图做": "設備負荷、シュート空き率、交通ヒートマップに基づき", "订单智能派发：Filter 模板、Assignment Mode、Cron 定时计划与异常排除。": "注文智能派发：Filter テンプレート、Assignment Mode、Cron 計画、例外除外。", "动态波次重组，避免输送线堵点、机器人排队与格口饥饿。": "動的波次再編により、コンベヤ詰まり、ロボット待ち、シュート飢餓を回避します。", "原生集成多品牌 PLC 驱动，无需第三方通信中间件。": "複数ブランド PLC ドライバをネイティブ統合し、第三者通信ミドルウェアを不要にします。", "直接控制堆垛机、四向穿梭车、输送线、PTL、RFID、DWS、AMR/RCS。": "スタッカークレーン、四方向シャトル、コンベヤ、PTL、RFID、DWS、AMR/RCS を直接制御します。", "设备总览、拓扑布局、PLC 寄存器监控、通信日志与仿真控制。": "設備一覧、トポロジー、PLC レジスタ監視、通信ログ、シミュレーション制御。", "毫秒级屏蔽硬件差异，将设备事件回写业务事实层。": "ミリ秒レベルでハード差異を吸収し、設備イベントを業務事実層へ書き戻します。", "设备层：机器人、IoT 设备与手持终端由同一个 WCS 直驱。": "設備層：ロボット、IoT 機器、ハンディ端末を同じ WCS が直接制御。", "每个硬件产品都对应明确的现场用途、控制对象与 WCS 回传事件。OrbiFlow 将机器人、IoT 设备、传感器与手持终端抽象为统一设备对象，直接进入任务调度与异常处理链路。": "各ハードウェアは現場用途、制御対象、WCS 返却イベントに対応します。OrbiFlow はロボット、IoT 機器、センサー、ハンディ端末を統一設備オブジェクトとして扱い、タスク調度と例外処理へ直接入れます。", "AirRob 空中机器人": "AirRob 空中ロボット", "悬挂式料箱到人系统，超高密度立体调度。WCS 管理轨道占用、吊箱动作、站点排队、异常绕行与 Rerouting。": "吊下げ式トート・トゥ・パーソン。高密度立体調度に対応し、WCS が軌道占有、吊箱動作、ステーション待ち、例外迂回、Rerouting を管理します。", "3D-Sort 立体分拣系统": "3D-Sort 立体仕分けシステム", "动态格口分配，应对大促千万级包裹错层高速分拣。WES 按承运商、线路、截单时间与格口空闲率重组波次。": "動的シュート割当で大規模キャンペーン時の高速多層仕分けに対応。WES は配送会社、ルート、締切、シュート空き率で波次を再編します。", "小黄人分拣机器人": "小型仕分けロボット", "柔性台面分拣方案，WCS 实时下发小车行进轨迹、避让策略、投递动作与缺口重投策略。": "柔軟なテーブル仕分け。WCS が走行経路、回避方針、投入動作、欠口再投入をリアルタイム指示します。", "边缘计算控制网关": "エッジ制御ゲートウェイ", "支持 Modbus TCP/RTU、Profinet，秒级解析传感器、光电开关、急停状态与设备心跳，向 WCS 输出标准事件流。": "Modbus TCP/RTU、Profinet に対応し、センサー、光電、非常停止、ハートビートを秒単位で解析し、WCS へ標準イベントを出力します。", "智能亮灯拣选毫秒级响应；RFID 通道门与体积测量 DWS 支持流水线动态过账、重容差与单据强校验。": "PTL はミリ秒応答。RFID ゲートと DWS はコンベヤ上の動的計上、重量許容差、伝票強検証に対応します。", "工业级 PDA 手持终端": "産業用 PDA ハンディ端末", "扫描优先（Scan-Priority）交互，扣动扳机即驱动业务流；HTML5 全屏沉浸式，支持收货看板、Settlement 确认屏、大字体、防误触与弱网缓存。": "Scan-Priority 操作でトリガーを引くだけで業務フローを進めます。HTML5 全画面、入荷看板、Settlement 確認、大文字、防誤タッチ、弱ネットワークキャッシュに対応。", "AI 不做聊天摆设，负责把异常变成可执行的路径重写。": "AI は飾りのチャットではなく、例外を実行可能な経路書き換えに変えます。", "Agent 持续读取订单截单时间、库存批次、设备负载、格口空闲率、路径拥塞、硬件宕机与人工站点产能，再把建议落到 WES/WCS 的任务与设备动作。": "Agent は締切、在庫ロット、設備負荷、シュート空き率、経路混雑、設備停止、ステーション能力を継続的に読み取り、提案を WES/WCS のタスクと設備動作へ落とします。", "自适应波次重组": "適応型波次再編", "实时抓取截单时间、3D-Sort 格口空闲率、交通热力图、拣选站排队长度与承运商集包窗口，动态重组最优波次。": "締切、3D-Sort シュート空き率、交通ヒートマップ、ピッキング待ち、配送会社集約時間を読み取り、最適波次を動的に再編します。", "系统自愈与博弈": "システム自己修復", "感知某段输送线、某台 AirRob、某个 PTL 格口或 DWS 复秤点不可用后，秒级重写任务路径，货物自动 Rerouting，业务不触发停机。": "コンベヤ区間、AirRob、PTL シュート、DWS 再計量点が使えない場合、秒単位で経路を書き換え、貨物を自動 Rerouting し、業務停止を避けます。", "自然语言接口（LLM）": "自然言語インターフェース（LLM）", "管理员可用普通话下达调度指令，例如“把华东 B2C 截单前 40 分钟订单优先推到 3D-Sort 二层格口，暂停低优先级补货”。": "管理者は自然言語で調度指示を出せます。例：締切40分前の華東 B2C 注文を 3D-Sort 2層シュートへ優先し、低優先補充を停止。", "AI 生成 BPMN 工作流": "AI 生成 BPMN ワークフロー", "一句话描述入库上架流程，AI 确认搬运设备、工位操作、分配方式与超时策略，然后生成可执行的 Workflow Definition。": "入庫上架プロセスを一文で説明すると、AI が搬送設備、ステーション操作、割当方式、タイムアウト方針を確認し、実行可能な Workflow Definition を生成します。", "典型应用场景：从业务复杂度到设备控制点都能落到可执行方案。": "典型導入シーン：業務複雑度から設備制御点まで実行可能な方案に落とし込みます。", "以下场景覆盖多货主仓、自动化分拣线与 AI 工作流配置，适合用于售前方案、项目评估和上线后运营复盘。": "以下は複数荷主倉庫、自動仕分けライン、AI ワークフロー設定をカバーし、プリセールス、プロジェクト評価、稼働後レビューに適しています。", "多货主": "複数荷主", "多仓": "複数倉庫", "结算规则": "精算ルール", "承运商": "配送会社", "场景 01": "シーン 01", "3PL 多客户仓：多仓、多货主、多承运商": "3PL 複数顧客倉庫：複数倉庫・複数荷主・複数配送会社", "多货主库存隔离、跨仓主数据共享、承运商规则、电子面单直连与费用结算统一进入 WMS 事实层。": "荷主別在庫分離、倉庫横断マスタ共有、配送会社ルール、電子ラベル直結、費用精算を WMS 事実層へ統合します。", "输送线任务下发": "コンベヤタスク指示", "DWS 称重体积校验": "DWS 重量・体積検証", "RFID / PTL 回传确认": "RFID / PTL 確認返却", "场景 02": "シーン 02", "WCS 直驱：输送线 + PTL + DWS + RFID": "WCS 直制御：コンベヤ + PTL + DWS + RFID", "输送线、PTL、RFID、DWS 与边缘网关统一接入 WCS，按任务状态回传称重、体积、标签与过账结果。": "コンベヤ、PTL、RFID、DWS、エッジゲートウェイを WCS に統合し、タスク状態に応じて重量、体積、ラベル、計上結果を返します。", "场景 03": "シーン 03", "AI 生成流程：新业务类型配置即上线": "AI 生成フロー：新業務タイプを設定で立ち上げ", "通过 Workflow Definition 配置节点、设备、参数映射、异常分支与重试策略，新业务无需重新开发主流程。": "Workflow Definition でノード、設備、パラメータ、例外分岐、リトライを設定し、新業務は主フロー再開発なしで開始できます。", "联系之后，客户需要拿到可决策的东西。": "問い合わせ後、意思決定できる成果物を受け取るべきです。", "第一次沟通不做泛泛演示，而是把仓库约束拆成业务流、库存流、设备流、异常流四张图，判断 OrbiFlow 是否能降低集成风险和上线不确定性。": "初回は一般的なデモではなく、倉庫制約を業務・在庫・設備・例外フローの4枚に分解し、OrbiFlow が統合リスクと立ち上げ不確実性を下げられるか判断します。", "业务流程拆解": "業務フロー分解", "入库、库存、出库、退货、盘点、补货、结算与异常补偿流程边界。": "入庫、在庫、出庫、返品、棚卸、補充、精算、例外補償の境界。", "设备控制清单": "設備制御リスト", "PLC、输送线、机器人、PTL、RFID、DWS、PDA 的动作、事件与协议风险。": "PLC、コンベヤ、ロボット、PTL、RFID、DWS、PDA の動作、イベント、プロトコルリスク。", "瓶颈与节拍判断": "ボトルネック・タクト評価", "按订单结构、截单时间、站点产能、格口资源与设备负载判断拥塞点。": "注文構造、締切、ステーション能力、シュート資源、設備負荷から混雑点を判断します。", "上线分阶段路径": "段階的立ち上げロードマップ", "从主数据、接口、设备联调、灰度切流到爬坡运营的实施顺序。": "マスタ、インターフェース、設備連調、段階切替、運用立ち上げまでの実施順序。", "交钥匙不是承诺词，是交付边界。": "ターンキーは標語ではなく、納入範囲です。", "OrbiFlow.ai 交付系统蓝图、主数据梳理、设备选型、WCS 驱动、现场节拍仿真、PDA 原型、PLC 联调到上线爬坡。客户不需要在软件商、集成商、机器人厂商与 IT 中间做翻译。": "OrbiFlow.ai はシステム設計、マスタ整理、設備選定、WCS ドライバ、現場タクトシミュレーション、PDA プロトタイプ、PLC 連調から立ち上げまで提供します。顧客はソフト会社、SI、ロボットベンダー、IT の間で翻訳する必要がありません。", "蓝图与主数据": "設計とマスタデータ", "库位编码、容器体系、批次策略、单据流、承运商规则、SKU 尺寸与效期策略。": "ロケーションコード、容器体系、ロット戦略、伝票フロー、配送会社ルール、SKU サイズ、有効期限方針。", "设备与协议": "設備とプロトコル", "AirRob、3D-Sort、小黄人、PTL、RFID、DWS、边缘网关、PLC 与输送线。": "AirRob、3D-Sort、小型仕分けロボット、PTL、RFID、DWS、エッジゲートウェイ、PLC、コンベヤ。", "作业与异常": "作業と例外", "盲收、理货、盘点、波次、补货、复核、称重、错分、宕机与补偿任务。": "ブラインド入荷、検品、棚卸、波次、補充、再確認、計量、誤仕分け、停止、補償タスク。", "上线与爬坡": "立ち上げとランプアップ", "仿真压测、灰度切流、现场看板、SLA 追踪、故障演练与 SOP 固化。": "シミュレーション負荷試験、段階切替、現場看板、SLA 追跡、障害訓練、SOP 定着。", "把仓库真实约束发来，先做一次技术评估。": "実際の倉庫制約を送って、まず技術評価を行いましょう。", "建议附上订单结构、SKU 维度、峰值订单、当前系统、设备清单、截单规则和最痛的三个异常。我们会按业务流、控制流、设备流拆解是否适合 OrbiFlow。": "注文構造、SKU、ピーク注文、現行システム、設備一覧、締切ルール、最も痛い例外3件を共有してください。業務フロー、制御フロー、設備フローで OrbiFlow への適合性を評価します。", "订单 / 波次 / 截单": "注文 / 波次 / 締切", "SKU / 批次 / 效期": "SKU / ロット / 期限", "异常与补偿任务": "例外と補償タスク", "评估邮件模板": "評価メールテンプレート", "仓库类型：3PL / 电商 / 制造 / 冷链 / 医药": "倉庫タイプ：3PL / EC / 製造 / コールドチェーン / 医薬", "规模：日均订单、峰值订单、SKU、库位、人员班次": "規模：日次注文、ピーク注文、SKU、ロケーション、シフト", "设备：输送线、AMR、PTL、RFID、DWS、PLC、自动仓": "設備：コンベヤ、AMR、PTL、RFID、DWS、PLC、自動倉庫", "目标：降本、提效、上线周期、升级旧系统或新增自动化": "目標：コスト削減、効率化、立ち上げ期間、旧システム更新または新規自動化", "发送评估需求": "評価依頼を送信"} };
+      Object.assign(translations.en, {"品牌释义": "Meaning", "What OrbiFlow Means": "What OrbiFlow Means", "OrbiFlow：把 Operation、Robotics、BI 串成现场物流的连续流。": "OrbiFlow: Operation, Robotics and BI connected into one continuous logistics flow.", "OrbiFlow 的名字不是抽象概念，而是产品边界：现场业务、机器人控制、数据智能不再分成三个孤岛，而是形成“モノ（物）、人、作业、情报”的统一流动。": "The name OrbiFlow is not an abstract concept; it defines the product boundary. Field operations, robot control and data intelligence are no longer three silos. They become one flow of materials, people, work and information.", "解决 WMS 层的现场业务、移动端 PDA 协同与人工操作，让收货、理货、盘点、拣选、复核都有可追踪的业务事实。": "Solves WMS-layer field operations, PDA collaboration and manual work, making receiving, tallying, counting, picking and review traceable as business facts.", "解决 WCS/WES 层的机器人调度与自动化设备控制，覆盖 AGV/AMR、穿梭车、输送线、PTL、RFID、DWS 与 PLC。": "Solves WCS/WES-layer robot dispatch and automation control across AGV/AMR, shuttles, conveyors, PTL, RFID, DWS and PLC.", "解决全局数据看板、AI 预测、效率瓶颈分析，把订单、库存、设备、站点与异常转成可决策的运营情报。": "Solves global dashboards, AI forecasting and efficiency bottleneck analysis, turning orders, inventory, devices, stations and exceptions into decision-ready intelligence.", "将 O、R、BI 打破孤岛，串联成物流现场最顺畅的“モノ（物）、人、作业、情报”之流。": "Breaks the silos among O, R and BI, connecting the smoothest on-site flow of materials, people, work and information."});
+      Object.assign(translations.ja, {"品牌释义": "ブランド意味", "What OrbiFlow Means": "OrbiFlow の意味", "OrbiFlow：把 Operation、Robotics、BI 串成现场物流的连续流。": "OrbiFlow：Operation、Robotics、BI を現場物流の連続した流れにします。", "OrbiFlow 的名字不是抽象概念，而是产品边界：现场业务、机器人控制、数据智能不再分成三个孤岛，而是形成“モノ（物）、人、作业、情报”的统一流动。": "OrbiFlow という名前は抽象概念ではなく、プロダクトの境界を示します。現場業務、ロボット制御、データインテリジェンスを孤立させず、「モノ（物）、人、作業、情報」の統一された流れにします。", "解决 WMS 层的现场业务、移动端 PDA 协同与人工操作，让收货、理货、盘点、拣选、复核都有可追踪的业务事实。": "WMS レイヤーの現場業務、PDA 連携、人手作業を解決し、入荷、検品、棚卸、ピッキング、再確認を追跡可能な業務事実にします。", "解决 WCS/WES 层的机器人调度与自动化设备控制，覆盖 AGV/AMR、穿梭车、输送线、PTL、RFID、DWS 与 PLC。": "WCS/WES レイヤーのロボット調度と自動化設備制御を解決し、AGV/AMR、シャトル、コンベヤ、PTL、RFID、DWS、PLC をカバーします。", "解决全局数据看板、AI 预测、效率瓶颈分析，把订单、库存、设备、站点与异常转成可决策的运营情报。": "全体データ看板、AI 予測、効率ボトルネック分析を解決し、注文、在庫、設備、ステーション、例外を意思決定可能な運用情報に変えます。", "将 O、R、BI 打破孤岛，串联成物流现场最顺畅的“モノ（物）、人、作业、情报”之流。": "O、R、BI の孤立をなくし、物流現場で最もスムーズな「モノ（物）、人、作業、情報」の流れにつなげます。"});
+      Object.assign(translations.en, { "PTL / RFID / DWS 设备层": "PTL / RFID / DWS Device Layer" });
+      Object.assign(translations.ja, { "PTL / RFID / DWS 设备层": "PTL / RFID / DWS 設備層" });
+      const meta = {
+        zh: { title: 'OrbiFlow.ai | WMS/WES/WCS + AI Agent + Robotics Turnkey Platform', desc: 'OrbiFlow.ai：WMS/WES/WCS、AI Agent、机器人、IoT 设备层、PDA Scan-Priority 一体化仓储自动化平台。', subject: 'OrbiFlow 仓库自动化评估', body: '你好，想评估 OrbiFlow 方案。\n仓库类型：\n日均订单/峰值订单：\nSKU 数量：\n现有系统（ERP/OMS/TMS/WMS）：\n现有设备（输送线/AMR/PTL/RFID/DWS/PLC）：\n主要问题：' },
+        en: { title: 'OrbiFlow.ai | Integrated WMS/WES/WCS + AI Agent + Robotics', desc: 'OrbiFlow.ai delivers integrated WMS/WES/WCS, AI Agent, robotics, IoT device layer and Scan-Priority PDA for warehouse automation.', subject: 'OrbiFlow warehouse automation assessment', body: 'Hello, I would like to assess OrbiFlow for our warehouse.\nWarehouse type:\nAverage / peak orders:\nSKU count:\nCurrent systems (ERP/OMS/TMS/WMS):\nCurrent devices (conveyors/AMR/PTL/RFID/DWS/PLC):\nMain issues:' },
+        ja: { title: 'OrbiFlow.ai | 統合 WMS/WES/WCS + AI Agent + Robotics', desc: 'OrbiFlow.ai は WMS/WES/WCS、AI Agent、ロボット、IoT 設備層、Scan-Priority PDA を統合した倉庫自動化プラットフォームです。', subject: 'OrbiFlow 倉庫自動化 評価依頼', body: 'こんにちは。OrbiFlow の導入評価を希望します。\n倉庫タイプ：\n日次 / ピーク注文数：\nSKU 数：\n現行システム（ERP/OMS/TMS/WMS）：\n現行設備（コンベヤ/AMR/PTL/RFID/DWS/PLC）：\n主な課題：' }
+      };
+      const original = new WeakMap();
+      function shouldSkip(node) {
+        const p = node.parentElement;
+        return !p || ['SCRIPT','STYLE','SVG','NOSCRIPT'].includes(p.tagName) || p.closest('.lang-select-wrap');
+      }
+      function translateNode(node, lang) {
+        if (shouldSkip(node)) return;
+        if (!original.has(node)) original.set(node, node.nodeValue);
+        const base = original.get(node);
+        const trimmed = base.trim();
+        if (!trimmed) { node.nodeValue = base; return; }
+        const translated = lang === 'zh' ? trimmed : (translations[lang] && translations[lang][trimmed]) || trimmed;
+        node.nodeValue = base.replace(trimmed, translated);
+      }
+      function mailto(lang) {
+        const m = meta[lang] || meta.zh;
+        return 'mailto:hello@orbiflow.ai?subject=' + encodeURIComponent(m.subject) + '&body=' + encodeURIComponent(m.body);
+      }
+      function applyLanguage(lang) {
+        document.documentElement.lang = lang === 'ja' ? 'ja' : lang === 'en' ? 'en' : 'zh-CN';
+        document.title = meta[lang].title;
+        const desc = document.querySelector('meta[name="description"]');
+        if (desc) desc.setAttribute('content', meta[lang].desc);
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach(node => translateNode(node, lang));
+        document.querySelectorAll('a[href^="mailto:hello@orbiflow.ai"]').forEach(a => a.setAttribute('href', mailto(lang)));
+        const languageSelect = document.getElementById('languageSelect');
+        if (languageSelect) languageSelect.value = lang;
+        localStorage.setItem('orbiflow-lang', lang);
+      }
+      const browser = (navigator.language || '').toLowerCase();
+      const urlLang = new URLSearchParams(window.location.search).get('lang');
+      const initial = ['zh','en','ja'].includes(urlLang) ? urlLang : (localStorage.getItem('orbiflow-lang') || (browser.startsWith('ja') ? 'ja' : browser.startsWith('en') ? 'en' : 'zh'));
+      const languageSelect = document.getElementById('languageSelect');
+      if (languageSelect) languageSelect.addEventListener('change', () => applyLanguage(languageSelect.value));
+      applyLanguage(initial);
+    })();
+  </script>
+</body>
+</html>
