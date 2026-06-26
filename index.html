@@ -168,6 +168,8 @@
     .delay-1 { animation-delay: .08s; } .delay-2 { animation-delay: .16s; } .delay-3 { animation-delay: .24s; }
     @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
     .device-svg { width: 100%; height: 210px; display: block; }
+    .hardware-photo { width: 100%; height: 260px; display: block; object-fit: cover; filter: saturate(.92) contrast(1.05) brightness(.82); }
+    .card:hover .hardware-photo { filter: saturate(1.02) contrast(1.08) brightness(.92); transition: .24s ease; }
     .device-svg text { font-family: 'Space Grotesk', 'Noto Sans SC', sans-serif; }
     .metric-card { position: relative; overflow: hidden; }
     .metric-card::after { content: ''; position: absolute; right: -32px; top: -42px; width: 110px; height: 110px; border-radius: 50%; background: rgba(249,115,22,.10); filter: blur(2px); }
@@ -478,41 +480,57 @@
         </div>
         <div class="grid gap-6 lg:grid-cols-3">
           <article class="card overflow-hidden rounded-[2rem]">
-            <figure class="border-b border-slate-700 bg-slate-950 p-5">
-              <svg class="device-svg" viewBox="0 0 520 260" role="img" aria-label="AirRob hanging tote robot illustration">
-                <defs><linearGradient id="rail" x1="0" x2="1"><stop stop-color="#38bdf8"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs>
-                <rect x="25" y="32" width="470" height="18" rx="9" fill="url(#rail)" opacity=".95"/><path d="M70 50 L70 190 M185 50 L185 190 M335 50 L335 190 M455 50 L455 190" stroke="#334155" stroke-width="6"/>
-                <rect x="118" y="72" width="132" height="64" rx="16" fill="#172033" stroke="#f97316" stroke-width="3"/><circle cx="148" cy="104" r="14" fill="#38bdf8"/><circle cx="220" cy="104" r="14" fill="#38bdf8"/><rect x="145" y="148" width="78" height="52" rx="8" fill="#0f172a" stroke="#94a3b8"/>
-                <path d="M295 88 h120 v88 h-120z" fill="#111827" stroke="#38bdf8" stroke-width="3"/><path d="M315 110 h80 M315 134 h58 M315 158 h86" stroke="#f97316" stroke-width="5" stroke-linecap="round"/>
-                <text x="42" y="235" fill="#94a3b8" font-size="20">AirRob / overhead tote-to-person</text>
-              </svg>
+            <figure class="relative border-b border-slate-700 bg-slate-950">
+              <img src="assets/hardware/airrob-case.jpg" alt="AirRob overhead tote-to-person system in dense rack aisles" class="hardware-photo" loading="lazy" />
+              <figcaption class="absolute left-4 top-4 rounded-full border border-orange/45 bg-slate-950/75 px-3 py-1 text-xs font-bold uppercase tracking-[.18em] text-orange backdrop-blur">供应商案例图 · AirRob</figcaption>
             </figure>
-            <div class="p-6"><h3 class="font-display text-2xl font-bold text-white">AirRob 空中机器人</h3><p class="mt-3 text-sm leading-6 text-slate-300">悬挂式料箱到人系统，超高密度立体调度。WCS 管理轨道占用、吊箱动作、站点排队、异常绕行与 Rerouting。</p></div>
+            <div class="p-6">
+              <h3 class="font-display text-2xl font-bold text-white">AirRob 空中机器人</h3>
+              <p class="mt-3 text-sm leading-6 text-slate-300"><strong class="text-white">用途：</strong>&nbsp;悬挂式料箱到人系统，适合窄巷道、高密度料箱存储与多站点并行拣选。系统把箱体搬运从地面交通切到货架立面，减少 AMR 与人工通道冲突。</p>
+              <div class="mt-5 rounded-2xl border border-slate-700/80 bg-slate-950/55 p-4">
+                <p class="mono text-xs font-bold uppercase tracking-[.22em] text-cyan">WCS 控制点</p>
+                <ul class="mt-3 space-y-2 text-sm leading-6 text-slate-300">
+                  <li><i class="fa-solid fa-check mr-2 text-orange"></i>轨道/巷道占用、吊箱抓取、升降定位、站点排队与空箱回流。</li>
+                  <li><i class="fa-solid fa-check mr-2 text-orange"></i>设备故障后秒级改写任务路径，触发 Tote Rerouting 与异常补偿任务。</li>
+                </ul>
+              </div>
+            </div>
           </article>
 
           <article class="card overflow-hidden rounded-[2rem]">
-            <figure class="border-b border-slate-700 bg-slate-950 p-5">
-              <svg class="device-svg" viewBox="0 0 520 260" role="img" aria-label="3D-Sort sorter illustration">
-                <rect x="54" y="36" width="412" height="40" rx="20" fill="#111827" stroke="#38bdf8" stroke-width="3"/><rect x="86" y="92" width="348" height="118" rx="18" fill="#172033" stroke="#475569" stroke-width="2"/>
-                <g fill="#0f172a" stroke="#f97316" stroke-width="2"><rect x="105" y="108" width="58" height="38" rx="7"/><rect x="175" y="108" width="58" height="38" rx="7"/><rect x="245" y="108" width="58" height="38" rx="7"/><rect x="315" y="108" width="58" height="38" rx="7"/><rect x="105" y="158" width="58" height="38" rx="7"/><rect x="175" y="158" width="58" height="38" rx="7"/><rect x="245" y="158" width="58" height="38" rx="7"/><rect x="315" y="158" width="58" height="38" rx="7"/></g>
-                <path d="M80 56 C150 25 215 25 258 56 S370 92 443 56" fill="none" stroke="#f97316" stroke-width="5" stroke-linecap="round"/><circle cx="256" cy="56" r="12" fill="#38bdf8"/>
-                <text x="54" y="238" fill="#94a3b8" font-size="20">3D-Sort / dynamic chute allocation</text>
-              </svg>
+            <figure class="relative border-b border-slate-700 bg-slate-950">
+              <img src="assets/hardware/3d-sort-case.jpg" alt="Large-scale robotic sorting field with many sorting robots and chutes" class="hardware-photo" loading="lazy" />
+              <figcaption class="absolute left-4 top-4 rounded-full border border-orange/45 bg-slate-950/75 px-3 py-1 text-xs font-bold uppercase tracking-[.18em] text-orange backdrop-blur">供应商案例图 · Sortation</figcaption>
             </figure>
-            <div class="p-6"><h3 class="font-display text-2xl font-bold text-white">3D-Sort 立体分拣系统</h3><p class="mt-3 text-sm leading-6 text-slate-300">动态格口分配，应对大促千万级包裹错层高速分拣。WES 按承运商、线路、截单时间与格口空闲率重组波次。</p></div>
+            <div class="p-6">
+              <h3 class="font-display text-2xl font-bold text-white">3D-Sort 立体分拣系统</h3>
+              <p class="mt-3 text-sm leading-6 text-slate-300"><strong class="text-white">用途：</strong>&nbsp;面向包裹、鞋服、美妆、跨境电商与邮政快递场景的高峰分拣。WES 按承运商、线路、截单时间与格口空闲率持续重组波次。</p>
+              <div class="mt-5 rounded-2xl border border-slate-700/80 bg-slate-950/55 p-4">
+                <p class="mono text-xs font-bold uppercase tracking-[.22em] text-cyan">WES/WCS 控制点</p>
+                <ul class="mt-3 space-y-2 text-sm leading-6 text-slate-300">
+                  <li><i class="fa-solid fa-check mr-2 text-orange"></i>格口动态分配、错层投递、满格避让、重投策略与承运商集包窗口联动。</li>
+                  <li><i class="fa-solid fa-check mr-2 text-orange"></i>按热区交通、设备负载和截单 SLA 做任务节流，避免局部格口饥饿或拥塞。</li>
+                </ul>
+              </div>
+            </div>
           </article>
 
           <article class="card overflow-hidden rounded-[2rem]">
-            <figure class="border-b border-slate-700 bg-slate-950 p-5">
-              <svg class="device-svg" viewBox="0 0 520 260" role="img" aria-label="sorting robot illustration">
-                <rect x="52" y="168" width="416" height="24" rx="12" fill="#334155"/><path d="M84 152 C150 108 245 108 322 152" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="8 8"/>
-                <g transform="translate(105 112)"><rect width="82" height="52" rx="24" fill="#f97316"/><circle cx="20" cy="56" r="13" fill="#0f172a" stroke="#cbd5e1"/><circle cx="62" cy="56" r="13" fill="#0f172a" stroke="#cbd5e1"/><rect x="22" y="17" width="38" height="14" rx="7" fill="#111827"/></g>
-                <g transform="translate(300 102)"><rect width="92" height="58" rx="27" fill="#fbbf24"/><circle cx="24" cy="62" r="14" fill="#0f172a" stroke="#cbd5e1"/><circle cx="70" cy="62" r="14" fill="#0f172a" stroke="#cbd5e1"/><rect x="28" y="18" width="38" height="15" rx="7" fill="#111827"/></g>
-                <rect x="220" y="60" width="74" height="52" rx="10" fill="#172033" stroke="#f97316" stroke-width="3"/><path d="M257 112 V152" stroke="#f97316" stroke-width="4"/>
-                <text x="52" y="232" fill="#94a3b8" font-size="20">Mini sorter robot / route + drop action</text>
-              </svg>
+            <figure class="relative border-b border-slate-700 bg-slate-950">
+              <img src="assets/hardware/sorter-robot.jpg" alt="Mini sorting robot with tilt tray for parcel sortation" class="hardware-photo" loading="lazy" />
+              <figcaption class="absolute left-4 top-4 rounded-full border border-orange/45 bg-slate-950/75 px-3 py-1 text-xs font-bold uppercase tracking-[.18em] text-orange backdrop-blur">供应商设备图 · Robot</figcaption>
             </figure>
-            <div class="p-6"><h3 class="font-display text-2xl font-bold text-white">小黄人分拣机器人</h3><p class="mt-3 text-sm leading-6 text-slate-300">柔性台面分拣方案，WCS 实时下发小车行进轨迹、避让策略、投递动作与缺口重投策略。</p></div>
+            <div class="p-6">
+              <h3 class="font-display text-2xl font-bold text-white">小黄人分拣机器人</h3>
+              <p class="mt-3 text-sm leading-6 text-slate-300"><strong class="text-white">用途：</strong>&nbsp;柔性台面分拣方案，适合租赁仓、改造仓、季节性峰值仓和格口频繁调整的业务。相比固定输送线，场地改动更轻。</p>
+              <div class="mt-5 rounded-2xl border border-slate-700/80 bg-slate-950/55 p-4">
+                <p class="mono text-xs font-bold uppercase tracking-[.22em] text-cyan">WCS 控制点</p>
+                <ul class="mt-3 space-y-2 text-sm leading-6 text-slate-300">
+                  <li><i class="fa-solid fa-check mr-2 text-orange"></i>小车路径、避让策略、投递动作、格口绑定、异常件回流与电量调度。</li>
+                  <li><i class="fa-solid fa-check mr-2 text-orange"></i>扫码、称重、路由和投递事件统一回写订单与包裹状态。</li>
+                </ul>
+              </div>
+            </div>
           </article>
 
           <article class="card overflow-hidden rounded-[2rem]">
@@ -522,7 +540,17 @@
                 <path d="M240 132 h140" stroke="#f97316" stroke-width="5" stroke-linecap="round"/><text x="103" y="236" fill="#94a3b8" font-size="20">Modbus TCP/RTU · Profinet · sensor events</text>
               </svg>
             </figure>
-            <div class="p-6"><h3 class="font-display text-2xl font-bold text-white">边缘计算控制网关</h3><p class="mt-3 text-sm leading-6 text-slate-300">支持 Modbus TCP/RTU、Profinet，秒级解析传感器、光电开关、急停状态与设备心跳，向 WCS 输出标准事件流。</p></div>
+            <div class="p-6">
+              <h3 class="font-display text-2xl font-bold text-white">边缘计算控制网关</h3>
+              <p class="mt-3 text-sm leading-6 text-slate-300"><strong class="text-white">用途：</strong>&nbsp;接入传感器、光电开关、急停、称重、扫码、PLC 与输送线段状态，把底层信号标准化成 WCS 事件。</p>
+              <div class="mt-5 rounded-2xl border border-slate-700/80 bg-slate-950/55 p-4">
+                <p class="mono text-xs font-bold uppercase tracking-[.22em] text-cyan">WCS 控制点</p>
+                <ul class="mt-3 space-y-2 text-sm leading-6 text-slate-300">
+                  <li><i class="fa-solid fa-check mr-2 text-orange"></i>Modbus TCP/RTU、Profinet 协议解析与设备心跳监控。</li>
+                  <li><i class="fa-solid fa-check mr-2 text-orange"></i>异常信号、放行信号、占位信号进入任务状态机。</li>
+                </ul>
+              </div>
+            </div>
           </article>
 
           <article class="card overflow-hidden rounded-[2rem]">
@@ -534,7 +562,17 @@
                 <text x="75" y="232" fill="#94a3b8" font-size="20">PTL · RFID gate · DWS dimension & weight</text>
               </svg>
             </figure>
-            <div class="p-6"><h3 class="font-display text-2xl font-bold text-white">PTL / RFID / DWS 设备层</h3><p class="mt-3 text-sm leading-6 text-slate-300">智能亮灯拣选毫秒级响应；RFID 通道门与体积测量 DWS 支持流水线动态过账、重容差与单据强校验。</p></div>
+            <div class="p-6">
+              <h3 class="font-display text-2xl font-bold text-white">PTL / RFID / DWS 设备层</h3>
+              <p class="mt-3 text-sm leading-6 text-slate-300"><strong class="text-white">用途：</strong>&nbsp;把拣选确认、标签校验、重量体积校验和过账动作前移到流水线现场，减少复核台人工判断。</p>
+              <div class="mt-5 rounded-2xl border border-slate-700/80 bg-slate-950/55 p-4">
+                <p class="mono text-xs font-bold uppercase tracking-[.22em] text-cyan">WCS 控制点</p>
+                <ul class="mt-3 space-y-2 text-sm leading-6 text-slate-300">
+                  <li><i class="fa-solid fa-check mr-2 text-orange"></i>PTL 毫秒级亮灯、RFID 通道门读取、DWS 动态称重与体积测量。</li>
+                  <li><i class="fa-solid fa-check mr-2 text-orange"></i>重容差、单据强校验、复秤失败与异常剔除口联动。</li>
+                </ul>
+              </div>
+            </div>
           </article>
 
           <article class="card overflow-hidden rounded-[2rem]">
@@ -546,7 +584,17 @@
                 <text x="119" y="246" fill="#94a3b8" font-size="20">Scan-Priority · full-screen HTML5 PDA</text>
               </svg>
             </figure>
-            <div class="p-6"><h3 class="font-display text-2xl font-bold text-white">工业级 PDA 手持终端</h3><p class="mt-3 text-sm leading-6 text-slate-300">扫描优先（Scan-Priority）交互，扣动扳机即驱动业务流；HTML5 全屏沉浸式，支持收货看板、Settlement 确认屏、大字体、防误触与弱网缓存。</p></div>
+            <div class="p-6">
+              <h3 class="font-display text-2xl font-bold text-white">工业级 PDA 手持终端</h3>
+              <p class="mt-3 text-sm leading-6 text-slate-300"><strong class="text-white">用途：</strong>&nbsp;面向盲收、理货、盘点、复核和异常处理的一线交互终端，扫描优先，少触屏，弱网可继续作业。</p>
+              <div class="mt-5 rounded-2xl border border-slate-700/80 bg-slate-950/55 p-4">
+                <p class="mono text-xs font-bold uppercase tracking-[.22em] text-cyan">WMS 控制点</p>
+                <ul class="mt-3 space-y-2 text-sm leading-6 text-slate-300">
+                  <li><i class="fa-solid fa-check mr-2 text-orange"></i>Scan-Priority：扣动扳机驱动收货、绑定、复核、上架和异常确认。</li>
+                  <li><i class="fa-solid fa-check mr-2 text-orange"></i>HTML5 全屏沉浸式、Settlement 确认屏、大字体、防误触和本地缓存。</li>
+                </ul>
+              </div>
+            </div>
           </article>
         </div>
       </div>
@@ -701,6 +749,8 @@
       Object.assign(translations.ja, {"品牌释义": "ブランド意味", "What OrbiFlow Means": "OrbiFlow の意味", "OrbiFlow：把 Operation、Robotics、BI 串成现场物流的连续流。": "OrbiFlow：Operation、Robotics、BI を現場物流の連続した流れにします。", "OrbiFlow 的名字不是抽象概念，而是产品边界：现场业务、机器人控制、数据智能不再分成三个孤岛，而是形成“モノ（物）、人、作业、情报”的统一流动。": "OrbiFlow という名前は抽象概念ではなく、プロダクトの境界を示します。現場業務、ロボット制御、データインテリジェンスを孤立させず、「モノ（物）、人、作業、情報」の統一された流れにします。", "解决 WMS 层的现场业务、移动端 PDA 协同与人工操作，让收货、理货、盘点、拣选、复核都有可追踪的业务事实。": "WMS レイヤーの現場業務、PDA 連携、人手作業を解決し、入荷、検品、棚卸、ピッキング、再確認を追跡可能な業務事実にします。", "解决 WCS/WES 层的机器人调度与自动化设备控制，覆盖 AGV/AMR、穿梭车、输送线、PTL、RFID、DWS 与 PLC。": "WCS/WES レイヤーのロボット調度と自動化設備制御を解決し、AGV/AMR、シャトル、コンベヤ、PTL、RFID、DWS、PLC をカバーします。", "解决全局数据看板、AI 预测、效率瓶颈分析，把订单、库存、设备、站点与异常转成可决策的运营情报。": "全体データ看板、AI 予測、効率ボトルネック分析を解決し、注文、在庫、設備、ステーション、例外を意思決定可能な運用情報に変えます。", "将 O、R、BI 打破孤岛，串联成物流现场最顺畅的“モノ（物）、人、作业、情报”之流。": "O、R、BI の孤立をなくし、物流現場で最もスムーズな「モノ（物）、人、作業、情報」の流れにつなげます。"});
       Object.assign(translations.en, { "PTL / RFID / DWS 设备层": "PTL / RFID / DWS Device Layer" });
       Object.assign(translations.ja, { "PTL / RFID / DWS 设备层": "PTL / RFID / DWS 設備層" });
+      Object.assign(translations.en, {"供应商案例图 · AirRob": "Supplier case image · AirRob", "供应商案例图 · Sortation": "Supplier case image · Sortation", "供应商设备图 · Robot": "Supplier device image · Robot", "用途：": "Use case:", "WCS 控制点": "WCS control points", "WES/WCS 控制点": "WES/WCS control points", "WMS 控制点": "WMS control points", "悬挂式料箱到人系统，适合窄巷道、高密度料箱存储与多站点并行拣选。系统把箱体搬运从地面交通切到货架立面，减少 AMR 与人工通道冲突。": "Overhead tote-to-person system for narrow aisles, high-density tote storage and multi-station parallel picking. It shifts tote movement from floor traffic to the rack elevation, reducing conflicts between AMRs and human aisles.", "轨道/巷道占用、吊箱抓取、升降定位、站点排队与空箱回流。": "Track/aisle occupancy, tote gripping, lift positioning, station queueing and empty-tote return.", "设备故障后秒级改写任务路径，触发 Tote Rerouting 与异常补偿任务。": "Rewrite task paths within seconds after device failure, triggering Tote Rerouting and exception compensation tasks.", "面向包裹、鞋服、美妆、跨境电商与邮政快递场景的高峰分拣。WES 按承运商、线路、截单时间与格口空闲率持续重组波次。": "Peak sortation for parcels, apparel, beauty, cross-border e-commerce and postal/express operations. WES continuously recomposes waves by carrier, route, cutoff time and chute availability.", "格口动态分配、错层投递、满格避让、重投策略与承运商集包窗口联动。": "Dynamic chute allocation, cross-level drop control, full-chute avoidance, re-drop policies and carrier bagging-window linkage.", "按热区交通、设备负载和截单 SLA 做任务节流，避免局部格口饥饿或拥塞。": "Throttle tasks by traffic heat zones, equipment load and cutoff SLA to avoid local chute starvation or congestion.", "柔性台面分拣方案，适合租赁仓、改造仓、季节性峰值仓和格口频繁调整的业务。相比固定输送线，场地改动更轻。": "Flexible deck-based sortation for leased warehouses, retrofit sites, seasonal peaks and operations with frequent chute changes. Site changes are lighter than fixed conveyor lines.", "小车路径、避让策略、投递动作、格口绑定、异常件回流与电量调度。": "Robot routes, avoidance strategy, drop action, chute binding, exception-item return and battery scheduling.", "扫码、称重、路由和投递事件统一回写订单与包裹状态。": "Scan, weigh, routing and drop events are written back uniformly to order and parcel status.", "接入传感器、光电开关、急停、称重、扫码、PLC 与输送线段状态，把底层信号标准化成 WCS 事件。": "Connect sensors, photoelectric switches, emergency stops, weighing, scanning, PLC and conveyor segment states, then standardize low-level signals into WCS events.", "Modbus TCP/RTU、Profinet 协议解析与设备心跳监控。": "Modbus TCP/RTU and Profinet protocol parsing plus device heartbeat monitoring.", "异常信号、放行信号、占位信号进入任务状态机。": "Exception, release and occupancy signals enter the task state machine.", "把拣选确认、标签校验、重量体积校验和过账动作前移到流水线现场，减少复核台人工判断。": "Move picking confirmation, label validation, weight/dimension validation and posting to the conveyor floor, reducing manual decisions at review stations.", "PTL 毫秒级亮灯、RFID 通道门读取、DWS 动态称重与体积测量。": "Millisecond PTL light response, RFID gate reading, and DWS dynamic weight/dimension measurement.", "重容差、单据强校验、复秤失败与异常剔除口联动。": "Weight tolerance, strict document validation, re-weigh failure and exception reject-port linkage.", "面向盲收、理货、盘点、复核和异常处理的一线交互终端，扫描优先，少触屏，弱网可继续作业。": "Frontline terminal for blind receiving, tallying, counting, review and exception handling. Scan-first, less touch input, and usable under weak network conditions.", "Scan-Priority：扣动扳机驱动收货、绑定、复核、上架和异常确认。": "Scan-Priority: pull the trigger to drive receiving, binding, review, putaway and exception confirmation.", "HTML5 全屏沉浸式、Settlement 确认屏、大字体、防误触和本地缓存。": "HTML5 full-screen UI, Settlement confirmation screen, large typography, mistouch prevention and local caching."});
+      Object.assign(translations.ja, {"供应商案例图 · AirRob": "サプライヤー事例画像 · AirRob", "供应商案例图 · Sortation": "サプライヤー事例画像 · Sortation", "供应商设备图 · Robot": "サプライヤー設備画像 · Robot", "用途：": "用途：", "WCS 控制点": "WCS 制御点", "WES/WCS 控制点": "WES/WCS 制御点", "WMS 控制点": "WMS 制御点", "悬挂式料箱到人系统，适合窄巷道、高密度料箱存储与多站点并行拣选。系统把箱体搬运从地面交通切到货架立面，减少 AMR 与人工通道冲突。": "吊下げ式トート・トゥ・パーソン。狭通路、高密度トート保管、複数ステーション並行ピッキングに適します。トート搬送を床面交通からラック立面へ移し、AMR と人の通路衝突を減らします。", "轨道/巷道占用、吊箱抓取、升降定位、站点排队与空箱回流。": "レール/通路占有、トート把持、昇降位置決め、ステーション待ち、空箱戻し。", "设备故障后秒级改写任务路径，触发 Tote Rerouting 与异常补偿任务。": "設備障害後、秒単位でタスク経路を書き換え、Tote Rerouting と例外補償タスクを起動します。", "面向包裹、鞋服、美妆、跨境电商与邮政快递场景的高峰分拣。WES 按承运商、线路、截单时间与格口空闲率持续重组波次。": "小包、アパレル、美容、越境 EC、郵便・宅配向けのピーク仕分け。WES は配送会社、ルート、締切、シュート空き率で波次を継続的に再編します。", "格口动态分配、错层投递、满格避让、重投策略与承运商集包窗口联动。": "シュート動的割当、階層間投入、満杯回避、再投入方針、配送会社集包時間との連動。", "按热区交通、设备负载和截单 SLA 做任务节流，避免局部格口饥饿或拥塞。": "交通ヒートゾーン、設備負荷、締切 SLA に基づきタスクを制御し、局所的なシュート飢餓や混雑を避けます。", "柔性台面分拣方案，适合租赁仓、改造仓、季节性峰值仓和格口频繁调整的业务。相比固定输送线，场地改动更轻。": "柔軟なデッキ型仕分け。賃貸倉庫、改造倉庫、季節ピーク、シュート変更が多い業務に適します。固定コンベヤより現場変更が軽くなります。", "小车路径、避让策略、投递动作、格口绑定、异常件回流与电量调度。": "ロボット経路、回避方針、投入動作、シュート紐付け、例外品戻し、電量調度。", "扫码、称重、路由和投递事件统一回写订单与包裹状态。": "スキャン、計量、ルーティング、投入イベントを注文・包裹状態へ統一的に書き戻します。", "接入传感器、光电开关、急停、称重、扫码、PLC 与输送线段状态，把底层信号标准化成 WCS 事件。": "センサー、光電、非常停止、計量、スキャン、PLC、コンベヤ区間状態を接続し、低レベル信号を WCS イベントに標準化します。", "Modbus TCP/RTU、Profinet 协议解析与设备心跳监控。": "Modbus TCP/RTU、Profinet の解析と設備ハートビート監視。", "异常信号、放行信号、占位信号进入任务状态机。": "例外信号、放行信号、占有信号をタスク状態機械へ入れます。", "把拣选确认、标签校验、重量体积校验和过账动作前移到流水线现场，减少复核台人工判断。": "ピッキング確認、ラベル検証、重量・体積検証、計上動作をライン現場へ前倒しし、検品台での人判断を減らします。", "PTL 毫秒级亮灯、RFID 通道门读取、DWS 动态称重与体积测量。": "PTL のミリ秒点灯、RFID ゲート読取、DWS 動的重量・体積測定。", "重容差、单据强校验、复秤失败与异常剔除口联动。": "重量許容差、伝票強検証、再計量失敗、例外排出口との連動。", "面向盲收、理货、盘点、复核和异常处理的一线交互终端，扫描优先，少触屏，弱网可继续作业。": "ブラインド入荷、検品、棚卸、再確認、例外処理向けの現場端末。スキャン優先、少ないタッチ操作、弱ネットワークでも作業継続可能。", "Scan-Priority：扣动扳机驱动收货、绑定、复核、上架和异常确认。": "Scan-Priority：トリガーで入荷、紐付け、再確認、上架、例外確認を進めます。", "HTML5 全屏沉浸式、Settlement 确认屏、大字体、防误触和本地缓存。": "HTML5 全画面 UI、Settlement 確認画面、大文字、防誤タッチ、ローカルキャッシュ。"});
       const meta = {
         zh: { title: 'OrbiFlow.ai | WMS/WES/WCS + AI Agent + Robotics Turnkey Platform', desc: 'OrbiFlow.ai：WMS/WES/WCS、AI Agent、机器人、IoT 设备层、PDA Scan-Priority 一体化仓储自动化平台。', subject: 'OrbiFlow 仓库自动化评估', body: '你好，想评估 OrbiFlow 方案。\n仓库类型：\n日均订单/峰值订单：\nSKU 数量：\n现有系统（ERP/OMS/TMS/WMS）：\n现有设备（输送线/AMR/PTL/RFID/DWS/PLC）：\n主要问题：' },
         en: { title: 'OrbiFlow.ai | Integrated WMS/WES/WCS + AI Agent + Robotics', desc: 'OrbiFlow.ai delivers integrated WMS/WES/WCS, AI Agent, robotics, IoT device layer and Scan-Priority PDA for warehouse automation.', subject: 'OrbiFlow warehouse automation assessment', body: 'Hello, I would like to assess OrbiFlow for our warehouse.\nWarehouse type:\nAverage / peak orders:\nSKU count:\nCurrent systems (ERP/OMS/TMS/WMS):\nCurrent devices (conveyors/AMR/PTL/RFID/DWS/PLC):\nMain issues:' },
