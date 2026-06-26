@@ -705,18 +705,43 @@
 
     <section id="agent" class="border-y border-slate-800 bg-slate-950/55 py-16">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
-          <div class="lg:sticky lg:top-28">
-            <p class="mb-3 text-sm font-bold uppercase tracking-[.36em] text-orange">AI Agent Brain</p>
-            <h2 class="rail-title font-display text-4xl font-bold tracking-tight text-white md:text-5xl">AI 不做聊天摆设，负责把异常变成可执行的路径重写。</h2>
-            <p class="mt-5 text-lg leading-8 text-slate-300">Agent 持续读取订单截单时间、库存批次、设备负载、格口空闲率、路径拥塞、硬件宕机与人工站点产能，再把建议落到 WES/WCS 的任务与设备动作。</p>
+        <div class="mb-10 grid gap-6 lg:grid-cols-[.92fr_1.08fr] lg:items-end">
+          <div>
+            <p class="mb-3 text-sm font-bold uppercase tracking-[.36em] text-orange">AI Operating Layer</p>
+            <h2 class="rail-title font-display text-4xl font-bold tracking-tight text-white md:text-5xl">Ontology Knowledge + Agent Factory + AI Agent，把仓库经验变成可执行能力。</h2>
           </div>
-          <div class="grid gap-5">
-            <article class="card rounded-[1.7rem] p-6"><h3 class="font-display text-2xl font-bold text-white"><i class="fa-solid fa-wave-square mr-3 text-orange"></i>自适应波次重组</h3><p class="mt-3 leading-7 text-slate-300">实时抓取截单时间、3D-Sort 格口空闲率、交通热力图、拣选站排队长度与承运商集包窗口，动态重组最优波次。</p></article>
-            <article class="card rounded-[1.7rem] p-6"><h3 class="font-display text-2xl font-bold text-white"><i class="fa-solid fa-kit-medical mr-3 text-orange"></i>系统自愈与博弈</h3><p class="mt-3 leading-7 text-slate-300">感知某段输送线、某台 AirRob、某个 PTL 格口或 DWS 复秤点不可用后，秒级重写任务路径，货物自动 Rerouting，业务不触发停机。</p></article>
-            <article class="card rounded-[1.7rem] p-6"><h3 class="font-display text-2xl font-bold text-white"><i class="fa-solid fa-comments mr-3 text-orange"></i>自然语言接口（LLM）</h3><p class="mt-3 leading-7 text-slate-300">管理员可用普通话下达调度指令，例如“把华东 B2C 截单前 40 分钟订单优先推到 3D-Sort 二层格口，暂停低优先级补货”。</p></article>
-            <article class="card rounded-[1.7rem] p-6"><h3 class="font-display text-2xl font-bold text-white"><i class="fa-solid fa-wand-magic-sparkles mr-3 text-orange"></i>AI 生成 BPMN 工作流</h3><p class="mt-3 leading-7 text-slate-300">一句话描述入库上架流程，AI 确认搬运设备、工位操作、分配方式与超时策略，然后生成可执行的 Workflow Definition。</p></article>
-          </div>
+          <p class="text-lg leading-8 text-slate-300">AI 不绕过 WMS/WES/WCS 直接改库存或乱发指令，而是在同一套业务事实、设备状态、权限与审批规则上，生成可解释、可审批、可执行的操作建议。</p>
+        </div>
+        <div class="grid gap-5 lg:grid-cols-3">
+          <article class="card rounded-[1.8rem] p-6">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-orange/45 bg-orange/10 text-2xl text-orange"><i class="fa-solid fa-diagram-project"></i></div>
+            <p class="mono text-xs font-bold uppercase tracking-[.22em] text-cyan">Layer 01</p>
+            <h3 class="mt-3 font-display text-2xl font-bold text-white">Ontology Knowledge</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-300">把订单、SKU、批次、容器、库位、人员、设备、承运商、SLA、异常和 SOP 建成仓库本体图谱，让 AI 知道“对象、规则、约束、影响范围”。</p>
+          </article>
+          <article class="card rounded-[1.8rem] p-6">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan/45 bg-cyan/10 text-2xl text-cyan"><i class="fa-solid fa-industry"></i></div>
+            <p class="mono text-xs font-bold uppercase tracking-[.22em] text-cyan">Layer 02</p>
+            <h3 class="mt-3 font-display text-2xl font-bold text-white">Agent Factory</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-300">按岗位生成调度、客服、运维、OA、报表等 Agent，绑定知识、工具、API、审批流和权限边界，让智能体可配置、可审计、可复用。</p>
+          </article>
+          <article class="card rounded-[1.8rem] p-6">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-orange/45 bg-orange/10 text-2xl text-orange"><i class="fa-solid fa-robot"></i></div>
+            <p class="mono text-xs font-bold uppercase tracking-[.22em] text-cyan">Layer 03</p>
+            <h3 class="mt-3 font-display text-2xl font-bold text-white">AI Agent</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-300">在 WMS/WES/WCS 的事实链路上执行自动分配、动态调度、知识整理、客服查单、OA 审批摘要、异常复盘和运营报告。</p>
+          </article>
+        </div>
+        <div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <article class="card rounded-[1.6rem] p-5"><h3 class="font-display text-xl font-bold text-white"><i class="fa-solid fa-route mr-3 text-orange"></i>Allocation Agent 自动分配</h3><p class="mt-3 text-sm leading-6 text-slate-400">按库存位置、订单 SLA、承运商截单、工位负载与设备状态自动建议订单释放、波次、任务和人员分配。</p></article>
+          <article class="card rounded-[1.6rem] p-5"><h3 class="font-display text-xl font-bold text-white"><i class="fa-solid fa-traffic-light mr-3 text-cyan"></i>Dispatch Agent 动态调度</h3><p class="mt-3 text-sm leading-6 text-slate-400">读取 AMR、输送线、PTL、DWS、分拣格口与工作站负载，触发任务节流、Rerouting 和异常绕行。</p></article>
+          <article class="card rounded-[1.6rem] p-5"><h3 class="font-display text-xl font-bold text-white"><i class="fa-solid fa-book-open-reader mr-3 text-orange"></i>Knowledge Agent 知识整理</h3><p class="mt-3 text-sm leading-6 text-slate-400">自动沉淀 SOP、设备故障记录、异常案例、上线问题和班组交接，把老师傅经验变成可检索知识。</p></article>
+          <article class="card rounded-[1.6rem] p-5"><h3 class="font-display text-xl font-bold text-white"><i class="fa-solid fa-headset mr-3 text-cyan"></i>Service Agent 客服查单</h3><p class="mt-3 text-sm leading-6 text-slate-400">用自然语言查询订单、库存、包裹、退货、异常与发运状态，给客服和运营同一套事实口径。</p></article>
+          <article class="card rounded-[1.6rem] p-5"><h3 class="font-display text-xl font-bold text-white"><i class="fa-solid fa-file-signature mr-3 text-orange"></i>OA Agent 审批协同</h3><p class="mt-3 text-sm leading-6 text-slate-400">库存调整、异常出库、赔付、补发、越权操作和费用结算进入审批流，AI 生成风险摘要与证据链。</p></article>
+          <article class="card rounded-[1.6rem] p-5"><h3 class="font-display text-xl font-bold text-white"><i class="fa-solid fa-chart-line mr-3 text-cyan"></i>Report Agent 运营报告</h3><p class="mt-3 text-sm leading-6 text-slate-400">自动生成日报、班次报告、SLA 风险、设备利用率、瓶颈分析和异常复盘，服务仓库经理与供应链 VP。</p></article>
+        </div>
+        <div class="mt-8 rounded-[1.5rem] border border-orange/30 bg-orange/10 p-5 text-sm leading-6 text-slate-300">
+          <span class="font-bold text-orange">控制边界：</span> AI 可以建议释放、分配、调度和审批摘要；高风险库存变更、越权出库和财务结算仍由权限、规则和人工审批把关。
         </div>
       </div>
     </section>
@@ -1026,6 +1051,50 @@
         "跨区域调拨、临时批次、盲收、换标、复核与结算频繁，需要把非标准流程也纳入系统闭环。": "地域間移動、一時ロット、Blind Receiving、ラベル貼替、検品、精算が多く、非標準フローもシステム閉ループに入れる必要がある現場向けです。",
         "不适合：": "不向き：",
         "如果只是单仓、少 SKU、轻量进销存，没有自动化设备和复杂履约规则，OrbiFlow 不是最轻的选择。": "単一倉庫、少数 SKU、軽量な入出庫のみで、自動化設備や複雑な履行ルールがない場合、OrbiFlow は最も軽量な選択肢ではありません。"
+      });
+      Object.assign(translations.en, {
+        "AI Operating Layer": "AI Operating Layer",
+        "Ontology Knowledge + Agent Factory + AI Agent，把仓库经验变成可执行能力。": "Ontology Knowledge + Agent Factory + AI Agent: turn warehouse experience into executable capability.",
+        "AI 不绕过 WMS/WES/WCS 直接改库存或乱发指令，而是在同一套业务事实、设备状态、权限与审批规则上，生成可解释、可审批、可执行的操作建议。": "AI does not bypass WMS/WES/WCS to change inventory or issue uncontrolled commands. It generates explainable, approvable and executable recommendations on the same business facts, device states, permissions and approval rules.",
+        "把订单、SKU、批次、容器、库位、人员、设备、承运商、SLA、异常和 SOP 建成仓库本体图谱，让 AI 知道“对象、规则、约束、影响范围”。": "Builds a warehouse ontology graph for orders, SKUs, lots, containers, locations, people, equipment, carriers, SLAs, exceptions and SOPs so AI understands objects, rules, constraints and impact scope.",
+        "按岗位生成调度、客服、运维、OA、报表等 Agent，绑定知识、工具、API、审批流和权限边界，让智能体可配置、可审计、可复用。": "Generates role-based agents for dispatch, service, operations, OA and reporting, binding knowledge, tools, APIs, approval flows and permission boundaries so agents are configurable, auditable and reusable.",
+        "在 WMS/WES/WCS 的事实链路上执行自动分配、动态调度、知识整理、客服查单、OA 审批摘要、异常复盘和运营报告。": "Runs automatic allocation, dynamic dispatch, knowledge organization, customer-service lookup, OA approval summaries, exception reviews and operations reports on the WMS/WES/WCS factual chain.",
+        "Allocation Agent 自动分配": "Allocation Agent",
+        "按库存位置、订单 SLA、承运商截单、工位负载与设备状态自动建议订单释放、波次、任务和人员分配。": "Recommends order release, waves, tasks and labor allocation by inventory location, order SLA, carrier cutoff, station load and equipment status.",
+        "Dispatch Agent 动态调度": "Dispatch Agent",
+        "读取 AMR、输送线、PTL、DWS、分拣格口与工作站负载，触发任务节流、Rerouting 和异常绕行。": "Reads AMR, conveyor, PTL, DWS, sort chute and station loads to trigger task throttling, Rerouting and exception bypass.",
+        "Knowledge Agent 知识整理": "Knowledge Agent",
+        "自动沉淀 SOP、设备故障记录、异常案例、上线问题和班组交接，把老师傅经验变成可检索知识。": "Captures SOPs, equipment fault records, exception cases, launch issues and shift handover notes, turning expert experience into searchable knowledge.",
+        "Service Agent 客服查单": "Service Agent",
+        "用自然语言查询订单、库存、包裹、退货、异常与发运状态，给客服和运营同一套事实口径。": "Uses natural language to query orders, inventory, parcels, returns, exceptions and shipping status, giving service and operations one factual answer.",
+        "OA Agent 审批协同": "OA Agent",
+        "库存调整、异常出库、赔付、补发、越权操作和费用结算进入审批流，AI 生成风险摘要与证据链。": "Routes inventory adjustment, exception outbound, compensation, reshipment, privileged operations and fee settlement into approval flows, with AI-generated risk summaries and evidence chains.",
+        "Report Agent 运营报告": "Report Agent",
+        "自动生成日报、班次报告、SLA 风险、设备利用率、瓶颈分析和异常复盘，服务仓库经理与供应链 VP。": "Generates daily reports, shift reports, SLA risks, equipment utilization, bottleneck analysis and exception reviews for warehouse managers and supply-chain VPs.",
+        "控制边界：": "Control boundary:",
+        "AI 可以建议释放、分配、调度和审批摘要；高风险库存变更、越权出库和财务结算仍由权限、规则和人工审批把关。": "AI can recommend release, allocation, dispatch and approval summaries; high-risk inventory changes, privileged outbound and financial settlement remain governed by permissions, rules and human approval."
+      });
+      Object.assign(translations.ja, {
+        "AI Operating Layer": "AI 運用レイヤー",
+        "Ontology Knowledge + Agent Factory + AI Agent，把仓库经验变成可执行能力。": "Ontology Knowledge + Agent Factory + AI Agent：倉庫経験を実行可能な能力に変えます。",
+        "AI 不绕过 WMS/WES/WCS 直接改库存或乱发指令，而是在同一套业务事实、设备状态、权限与审批规则上，生成可解释、可审批、可执行的操作建议。": "AI は WMS/WES/WCS を迂回して在庫変更や無秩序な指示を出しません。同じ業務事実、設備状態、権限、承認ルールの上で、説明可能・承認可能・実行可能な操作提案を生成します。",
+        "把订单、SKU、批次、容器、库位、人员、设备、承运商、SLA、异常和 SOP 建成仓库本体图谱，让 AI 知道“对象、规则、约束、影响范围”。": "注文、SKU、ロット、容器、ロケーション、人員、設備、配送会社、SLA、例外、SOP を倉庫オントロジーとして構築し、AI が対象、ルール、制約、影響範囲を理解できるようにします。",
+        "按岗位生成调度、客服、运维、OA、报表等 Agent，绑定知识、工具、API、审批流和权限边界，让智能体可配置、可审计、可复用。": "職種別に調度、客服、運用、OA、レポートなどの Agent を生成し、知識、ツール、API、承認フロー、権限境界を紐付け、設定可能・監査可能・再利用可能にします。",
+        "在 WMS/WES/WCS 的事实链路上执行自动分配、动态调度、知识整理、客服查单、OA 审批摘要、异常复盘和运营报告。": "WMS/WES/WCS の事実チェーン上で、自動割当、動的調度、知識整理、客服照会、OA 承認要約、例外レビュー、運用レポートを実行します。",
+        "Allocation Agent 自动分配": "Allocation Agent 自動割当",
+        "按库存位置、订单 SLA、承运商截单、工位负载与设备状态自动建议订单释放、波次、任务和人员分配。": "在庫位置、注文 SLA、配送締切、ステーション負荷、設備状態に基づき、注文解放、波次、タスク、人員割当を自動提案します。",
+        "Dispatch Agent 动态调度": "Dispatch Agent 動的調度",
+        "读取 AMR、输送线、PTL、DWS、分拣格口与工作站负载，触发任务节流、Rerouting 和异常绕行。": "AMR、コンベヤ、PTL、DWS、仕分けシュート、ステーション負荷を読み取り、タスク制御、Rerouting、例外迂回を起動します。",
+        "Knowledge Agent 知识整理": "Knowledge Agent 知識整理",
+        "自动沉淀 SOP、设备故障记录、异常案例、上线问题和班组交接，把老师傅经验变成可检索知识。": "SOP、設備故障記録、例外事例、立ち上げ課題、班交代メモを蓄積し、熟練者の経験を検索可能な知識に変えます。",
+        "Service Agent 客服查单": "Service Agent 問い合わせ照会",
+        "用自然语言查询订单、库存、包裹、退货、异常与发运状态，给客服和运营同一套事实口径。": "自然言語で注文、在庫、小包、返品、例外、出荷状態を照会し、客服と運用に同じ事実回答を提供します。",
+        "OA Agent 审批协同": "OA Agent 承認連携",
+        "库存调整、异常出库、赔付、补发、越权操作和费用结算进入审批流，AI 生成风险摘要与证据链。": "在庫調整、例外出庫、賠償、再出荷、権限超過操作、費用精算を承認フローに入れ、AI がリスク要約と証跡を生成します。",
+        "Report Agent 运营报告": "Report Agent 運用レポート",
+        "自动生成日报、班次报告、SLA 风险、设备利用率、瓶颈分析和异常复盘，服务仓库经理与供应链 VP。": "日報、シフトレポート、SLA リスク、設備稼働率、ボトルネック分析、例外レビューを自動生成し、倉庫責任者とサプライチェーン VP を支援します。",
+        "控制边界：": "制御境界：",
+        "AI 可以建议释放、分配、调度和审批摘要；高风险库存变更、越权出库和财务结算仍由权限、规则和人工审批把关。": "AI は解放、割当、調度、承認要約を提案できますが、高リスク在庫変更、権限超過出庫、財務精算は引き続き権限、ルール、人の承認で管理します。"
       });
       const meta = {
         zh: { title: 'OrbiFlow.ai | WMS/WES/WCS + AI Agent + Robotics Turnkey Platform', desc: 'OrbiFlow.ai：WMS/WES/WCS、AI Agent、机器人、IoT 设备层、PDA Scan-Priority 一体化仓储自动化平台。', subject: 'OrbiFlow 仓库自动化评估 / 顾问回访', body: '您好，OrbiFlow 顾问团队：\n\n我们想评估仓库自动化 / WMS-WES-WCS 一体化方案，烦请安排顾问回访。\n\n【联系人信息】\n姓名：\n公司：\n职位 / 部门：\n手机 / 微信：\n邮箱：\n所在城市 / 仓库城市：\n\n【项目背景】\n仓库类型：3PL / 电商 / 制造 / 冷链 / 医药 / 其他\n当前阶段：新仓规划 / 老仓改造 / 系统替换 / 自动化扩容\n期望上线时间：\n\n【业务规模】\n日均订单 / 峰值订单：\nSKU 数量：\n库位 / 面积：\n人员班次：\n\n【现有系统与设备】\n现有系统：ERP / OMS / TMS / WMS / WCS / 其他\n现有设备：输送线 / AMR / PTL / RFID / DWS / PLC / 自动仓 / 其他\n计划新增设备：\n\n【主要问题与目标】\n最痛的 3 个异常：\n目标：降本 / 提效 / 缩短上线周期 / 提升自动化稳定性 / 其他\n\n【希望回访时间】\n可联系时间段：\n\n谢谢。' },
